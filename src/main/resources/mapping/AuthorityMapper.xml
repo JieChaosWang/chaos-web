@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.my.test.mapper.AuthorityMapper" >
+    <resultMap id="BaseResultMap" type="com.my.test.pojo.Authority">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="authority_value" property="authorityValue" jdbcType="VARCHAR" />
+        <result column="authority_category_id" property="authorityCategoryId" jdbcType="BIGINT" />
+        <result column="path" property="path" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="authorityMap" type="com.my.test.pojo.Authority" extends="BaseResultMap">
+        <association property="authorityCategory" javaType="com.my.test.pojo.AuthorityCategory">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+    <resultMap id="RoleAndAuthorityMap" type="com.my.test.pojo.Authority" extends="BaseResultMap">
+        <collection property="roles" ofType="com.my.test.pojo.Role">
+            <id column="id" property="id" jdbcType="BIGINT" />
+            <result column="is_system" property="isSystem" jdbcType="VARCHAR" />
+            <result column="name" property="name" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, create_date, modify_date,name,authority_value,authority_category_id,path
+    </sql>
+    <select id="findByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT  <include refid="Base_Column_List"/>
+        FROM xmh_authority xa,xmh_role_authority xra
+        WHERE  xa.id = xra.authorities_id AND  xra.roles_id = #{id}
+    </select>
+    <select id="findAll" parameterType="java.lang.Integer" resultMap="authorityMap">
+        SELECT xa.id, xa.create_date, xa.modify_date,xa.name,xa.authority_value,xa.authority_category_id,xa.path,xac.name,xac.id
+        FROM xmh_authority xa,xmh_authority_category xac
+        WHERE  xa.authority_category_id = xac.id
+        ORDER BY `xa`.create_date DESC
+       <!-- <if test="param1 != null and param2 != null">
+            limit #{param1},#{param2}
+        </if>-->
+    </select>
+    <insert id="save" parameterType="com.my.test.pojo.Authority">
+        INSERT INTO  xmh_authority(
+          id,
+          create_date,
+          modify_date,
+          name,
+          authority_value,
+          authority_category_id,
+          path
+        )VALUES (
+          #{id},
+          #{createDate},
+          #{modifyDate},
+          #{name},
+          #{authorityValue},
+          #{authorityCategoryId},
+          #{path}
+        )
+
+    </insert>
+    <select id="getOne" parameterType="java.lang.Long" resultMap="RoleAndAuthorityMap">
+        SELECT
+          xa.id, xa.create_date, xa.modify_date,xa.name,xa.authority_value,xa.authority_category_id,xa.path,xr.id,xr.is_system,xr.name
+        FROM  xmh_authority xa,xmh_role_authority xra,xmh_role xr
+        WHERE xa.id = xra.authorities_id AND  xr.id = xra.roles_id AND  xa.id = #{id}
+    </select>
+    <update id="update" parameterType="com.my.test.pojo.Authority" >
+        UPDATE  xmh_authority
+        SET
+        <if test="modifyDate !=null ">
+            modify_date = #{modifyDate}
+        </if>
+        <if test="authorityValue !=null  ">
+            ,authority_value = #{authorityValue}
+        </if>
+        <if test="authorityCategoryId !=null ">
+            ,authority_category_id = #{authorityCategoryId}
+        </if>
+        <if test="name !=null">
+            ,name = #{name}
+        </if><if test="path !=null">
+           ,path = #{path}
+        </if>
+        WHERE id = #{id}
+    </update>
+    <delete id="delete" parameterType="java.lang.Long">
+        DELETE  FROM  xmh_authority WHERE id = #{id}
+    </delete>
+</mapper>
