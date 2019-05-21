@@ -36,7 +36,7 @@ public class AuthorityController extends BaseController {
 //        pageNum=1;pageSize=10;
 
 //        List<Authority> authorities = authorityService.findAll(pageNum , pageSize);
-        PageHelper.startPage(pageInfo.getPageNum() == 0 ? 1 : pageInfo.getPageNum(), 1);
+        PageHelper.startPage(pageInfo.getPageNum() == 0 ? 1 : pageInfo.getPageNum(), 10);
         List<Authority> list = authorityService.findAll(pageInfo.getPageNum(), pageInfo.getPageSize());
         PageInfo authorities = new PageInfo(list, 5);
         model.addAttribute("page", authorities);

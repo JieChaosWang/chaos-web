@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.my.test.mapper.StatisticsMapper" >
+<mapper namespace="com.my.test.mapper.StatisticsInfoMapper" >
     <resultMap id="StatisticsResultMap" type="com.my.test.pojo.StatisticsInfo" >
         <id column="STATISTICS_SEQ" property="statisticsSeq" jdbcType="INTEGER" />
         <result column="VOLUME_NUM" property="volumeNum" jdbcType="INTEGER" />
@@ -66,7 +66,7 @@
         </trim>
     </insert>
 
-    <select id="queryStatisticsInfo" resultMap="Base_Column_List" parameterType="com.my.test.pojo.StatisticsInfo">
+    <select id="queryStatisticsInfo" resultMap="StatisticsResultMap" parameterType="com.my.test.pojo.StatisticsInfo">
         SELECT * FROM
             STATISTICS_INFO
         WHERE
@@ -99,4 +99,8 @@
         WHERE STATISTICS_SEQ = #{statisticsSeq,jdbcType=INTEGER}
     </update>
 
-</mapper>
+    <select id="queryStatisticsInfoList" parameterType="com.my.test.pojo.StatisticsInfo" resultMap="StatisticsResultMap">
+        SELECT *
+        FROM STATISTICS_INFO
+    </select>
+ </mapper>

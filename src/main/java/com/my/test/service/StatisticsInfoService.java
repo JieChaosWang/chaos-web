@@ -2,6 +2,8 @@ package com.my.test.service;
 
 import com.my.test.pojo.StatisticsInfo;
 
+import java.util.List;
+
 /**
  * ********************************************************.<br>
  *
@@ -15,4 +17,6 @@ public interface StatisticsInfoService {
     StatisticsInfo queryStatisticsInfo(StatisticsInfo statisticsInfo);
 
     void addStatisticsInfo(StatisticsInfo statisticsInfo) throws Exception;
+
+    List<StatisticsInfo> queryStatisticsInfoList(StatisticsInfo statisticsInfo);
 }

@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/role/**").hasAuthority("admin:role")//角色管理
                 .antMatchers("/admin/**").hasAuthority("admin:admin")//管理员管理
                 .antMatchers("/area/**").hasAuthority("admin:area")//地区管理
+                .antMatchers("/statisticsInfo/**").hasAuthority("admin:statisticsInfo")//统计管理
                 //产品管理
                 .antMatchers("/scenic_spot/**").hasAuthority("admin:scenicSpot")//景区管理
                 .antMatchers("/product/**").hasAuthority("admin:product")//产品

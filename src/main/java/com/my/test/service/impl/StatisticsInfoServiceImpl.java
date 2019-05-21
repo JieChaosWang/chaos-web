@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 /**
  * ********************************************************.<br>
  *
@@ -45,6 +48,17 @@ public class StatisticsInfoServiceImpl implements StatisticsInfoService {
             throw new Exception("新增统计记录失败", e);
         }
 
+    }
+
+    @Override
+    public List<StatisticsInfo> queryStatisticsInfoList(StatisticsInfo statisticsInfo){
+
+        List<StatisticsInfo> list = list = statisticsInfoMapper.queryStatisticsInfoList(statisticsInfo);
+//        } catch (Exception e) {
+//            logger.error(e.getMessage());
+//            throw new Exception("新增统计记录失败", e);
+//        }
+        return list;
     }
 
 

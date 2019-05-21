@@ -52,6 +52,9 @@
                     <li sec:authorize="hasAuthority('admin:area')">
                         <a th:href="@{/area/list?menuId=area}" id="area">地区管理</a>
                     </li>
+                    <li sec:authorize="hasAuthority('admin:statistics')">
+                        <a th:href="@{/statistics/queryStatisticsInfoList?menuId=statistics}" id="statisticsInfo">统计管理</a>
+                    </li>
                     <!--<li>-->
                     <!--<a th:href="@{/setting/edit?menuId=setting}" id="setting">系统设置</a>-->
                     <!--</li>-->

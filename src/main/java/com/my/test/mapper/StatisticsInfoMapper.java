@@ -3,6 +3,8 @@ package com.my.test.mapper;
 import com.my.test.pojo.StatisticsInfo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * ********************************************************.<br>
  *
@@ -20,5 +22,7 @@ public interface StatisticsInfoMapper {
     StatisticsInfo queryStatisticsInfo(StatisticsInfo statisticsInfo);
 
     int updateStatisticsInfo(StatisticsInfo statisticsInfo);
+
+    List<StatisticsInfo> queryStatisticsInfoList(StatisticsInfo statisticsInfo);
 
 }
