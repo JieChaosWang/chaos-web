@@ -179,7 +179,7 @@ var CodeMirror = (function () {
             undo: operation(undo),
             redo: operation(redo),
             indentLine: operation(function (n, dir) {
-                if (isLine(n)) indentLine(n, dir == null ? "smart" : dir ? "add" : "subtract");
+                if (isLine(n)) indentLine(n, dir == null ? "smart" : dir ? "templates.authorityCategory.add" : "subtract");
             }),
             indentSelection: operation(indentSelected),
             historySize: function () {
@@ -1380,7 +1380,7 @@ var CodeMirror = (function () {
         }
 
         function indentLine(n, how) {
-            if (!how) how = "add";
+            if (!how) how = "templates.authorityCategory.add";
             if (how == "smart") {
                 if (!mode.indent) how = "prev";
                 else var state = getStateBefore(n);
@@ -1393,7 +1393,7 @@ var CodeMirror = (function () {
                 else indentation = 0;
             }
             else if (how == "smart") indentation = mode.indent(state, line.text.slice(curSpaceString.length), line.text);
-            else if (how == "add") indentation = curSpace + options.indentUnit;
+            else if (how == "templates.authorityCategory.add") indentation = curSpace + options.indentUnit;
             else if (how == "subtract") indentation = curSpace - options.indentUnit;
             indentation = Math.max(0, indentation);
             var diff = indentation - curSpace;
@@ -2212,7 +2212,7 @@ var CodeMirror = (function () {
             cm.indentSelection("smart");
         },
         indentMore: function (cm) {
-            cm.indentSelection("add");
+            cm.indentSelection("templates.authorityCategory.add");
         },
         indentLess: function (cm) {
             cm.indentSelection("subtract");

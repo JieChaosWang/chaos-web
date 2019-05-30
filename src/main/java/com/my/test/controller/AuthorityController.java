@@ -4,6 +4,7 @@ package com.my.test.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.my.test.pojo.Authority;
+import com.my.test.pojo.AuthorityCategory;
 import com.my.test.service.AuthorityCategoryService;
 import com.my.test.service.AuthorityService;
 import com.my.test.util.Message;
@@ -15,10 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
-
-/**
- * Created by wang on 2018/11/28.
- */
 @Controller
 @RequestMapping(value = "/authority")
 public class AuthorityController extends BaseController {
@@ -37,7 +34,7 @@ public class AuthorityController extends BaseController {
 
 //        List<Authority> authorities = authorityService.findAll(pageNum , pageSize);
         PageHelper.startPage(pageInfo.getPageNum() == 0 ? 1 : pageInfo.getPageNum(), 10);
-        List<Authority> list = authorityService.findAll(pageInfo.getPageNum(), pageInfo.getPageSize());
+        List<Authority> list = authorityService.queryAllAuthorityList(pageInfo.getPageNum(), pageInfo.getPageSize());
         PageInfo authorities = new PageInfo(list, 5);
         model.addAttribute("page", authorities);
         return "authority/list";
@@ -49,7 +46,10 @@ public class AuthorityController extends BaseController {
      */
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(Model model) {
-        model.addAttribute("authorityCategoryTree", authorityCategoryService.findAll());
+
+        List<AuthorityCategory> authorityCategories = authorityCategoryService.queryAuthorityCategoryList(new AuthorityCategory());
+
+        model.addAttribute("authorityCategoryTree", authorityCategories);
         return "authority/add";
     }
 
@@ -58,7 +58,7 @@ public class AuthorityController extends BaseController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(Authority authority, RedirectAttributes redirectAttributes) {
-        authorityService.save(authority);
+        authorityService.addAuthority(authority);
         addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
         return "redirect:list";
     }
@@ -67,9 +67,19 @@ public class AuthorityController extends BaseController {
      * 权限编辑
      */
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("authorityCategoryTree", authorityCategoryService.findAll());
-        model.addAttribute("authority", authorityService.getOne(id));
+    public String edit(@PathVariable("id") Long authorityId, Model model) {
+
+        List<AuthorityCategory> authorityCategories = authorityCategoryService.queryAuthorityCategoryList(new AuthorityCategory());
+
+        model.addAttribute("authorityCategoryTree", authorityCategories);
+
+        Authority authority = new Authority();
+
+        authority.setAuthorityId(authorityId);
+
+        authority = authorityService.queryAuthority(authority);
+
+        model.addAttribute("authority", authority);
         return "authority/edit";
     }
 
@@ -81,7 +91,7 @@ public class AuthorityController extends BaseController {
         if (!isValid(authority)) {
             return ERROR_VIEW;
         }
-        authorityService.update(authority);
+        authorityService.updateAuthority(authority);
         addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
         return "redirect:list";
     }
@@ -92,7 +102,7 @@ public class AuthorityController extends BaseController {
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public @ResponseBody
     Message delete(Long[] ids) {
-        Authority authority = authorityService.delete(ids);
+        Authority authority = authorityService.deleteAuthority(ids);
 
         if (authority != null) {
             return Message.error("删除失败，请先修改" + authority.getName() + "相关的角色");

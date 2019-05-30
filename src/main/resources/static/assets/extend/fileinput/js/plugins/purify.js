@@ -151,7 +151,7 @@
         'border', 'cellpadding', 'cellspacing', 'checked', 'cite', 'class', 'clear', 'color',
         'cols', 'colspan', 'coords', 'datetime', 'default', 'dir', 'disabled',
         'download', 'enctype', 'face', 'for', 'headers', 'height', 'hidden', 'high', 'href',
-        'hreflang', 'id', 'ismap', 'label', 'lang', 'list', 'loop', 'low', 'max',
+        'hreflang', 'id', 'ismap', 'label', 'lang', 'templates.authorityCategory.list', 'loop', 'low', 'max',
         'maxlength', 'media', 'method', 'min', 'multiple', 'name', 'noshade', 'novalidate',
         'nowrap', 'open', 'optimum', 'pattern', 'placeholder', 'poster', 'preload', 'pubdate',
         'radiogroup', 'readonly', 'rel', 'required', 'rev', 'reversed', 'rows',

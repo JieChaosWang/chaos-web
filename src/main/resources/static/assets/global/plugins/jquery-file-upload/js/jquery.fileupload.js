@@ -1025,8 +1025,8 @@
                 that._initProgressObject(newData);
                 that._addConvenienceMethods(e, newData);
                 result = that._trigger(
-                    'add',
-                    $.Event('add', {delegatedEvent: e}),
+                    'templates.authorityCategory.add',
+                    $.Event('templates.authorityCategory.add', {delegatedEvent: e}),
                     newData
                 );
                 return result;

@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.my.test.mapper.AuthorityCategoryMapper" >
-    <resultMap id="BaseResultMap" type="com.my.test.pojo.AuthorityCategory" >
-        <id column="id" property="id" jdbcType="BIGINT" />
-        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
-        <result column="orders" property="orders" jdbcType="INTEGER" />
-        <result column="name" property="name" jdbcType="VARCHAR" />
+<mapper namespace="com.my.test.mapper.AuthorityCategoryMapper">
+    <resultMap id="BaseResultMap" type="com.my.test.pojo.AuthorityCategory">
+        <id column="AUTHORITY_CATEGORY_ID" property="authorityCategoryId" jdbcType="BIGINT"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="ORDERS" property="orders" jdbcType="INTEGER"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <sql id="Base_Column_List">
-        id,create_date,modify_date,orders,NAME
-    </sql>
-   <select id="findAll" resultMap="BaseResultMap">
-      SELECT <include refid="Base_Column_List"/>
-       FROM  xmh_authority_category
-   </select>
 
+    <sql id="Base_Column_List">
+        AUTHORITY_CATEGORY_ID,CREATE_DATE,MODIFY_DATE,ORDERS,NAME
+    </sql>
+
+    <insert id="addAuthorityCategory" parameterType="com.my.test.pojo.AuthorityCategory">
+        INSERT INTO  XMH_AUTHORITY_CATEGORY(
+            AUTHORITY_CATEGORY_ID,
+            NAME,
+            ORDERS,
+            CREATE_DATE
+        )VALUES (
+            #{authorityCategoryId},
+            #{name},
+            #{orders},
+            #{createDate}
+        )
+    </insert>
+
+    <select id="queryAuthorityCategoryList" resultMap="BaseResultMap"
+            parameterType="com.my.test.pojo.AuthorityCategory">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            XMH_AUTHORITY_CATEGORY
+    </select>
+
+    <delete id="delAuthorityCategory" parameterType="java.lang.Long" >
+        DELETE FROM XMH_AUTHORITY_CATEGORY
+        WHERE AUTHORITY_CATEGORY_ID = #{authorityCategoryId,jdbcType=BIGINT}
+    </delete>
 </mapper>

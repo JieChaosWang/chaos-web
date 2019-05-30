@@ -55,7 +55,7 @@
                             <div class="col-md-4">
                                 <select name="authorityCategoryId" class="form-control">
                                     <option th:each="authorityCategory:${authorityCategoryTree}"
-                                            th:value="${authorityCategory.id}"
+                                            th:value="${authorityCategory.authorityCategoryId}"
                                             th:text="${authorityCategory.name}"></option>
                                 </select>
                             </div>

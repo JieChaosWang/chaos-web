@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.my.test.mapper.RoleMapper" >
+    <resultMap id="BaseResultMap" type="com.my.test.pojo.Role" >
+        <id column="ROLE_ID" property="roleId" jdbcType="INTEGER" />
+        <result column="NAME" property="name" jdbcType="VARCHAR" />
+        <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+        <result column="IS_SYSTEM" property="isSystem" jdbcType="CHAR" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="DATE" />
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="DATE" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ROLE_ID, NAME, DESCRIPTION, IS_SYSTEM, CREATE_DATE, MODIFY_DATE
+    </sql>
+
+    <!--添加角色信息 -->
+    <insert id="addRole" parameterType="com.my.test.pojo.Role">
+        INSERT INTO XMH_ROLE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                NAME,
+            </if>
+            <if test="description !=''">
+                DESCRIPTION,
+            </if>
+            <if test="isSystem != null">
+                IS_SYSTEM,
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE,
+            </if>
+            <if test="modifyDate != null">
+                MODIFY_DATE
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="description !=null">
+                #{description},
+            </if>
+            <if test="isSystem != null">
+                #{isSystem},
+            </if>
+            <if test="createDate != null">
+                #{createDate},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryRole" resultMap="BaseResultMap" parameterType="com.my.test.pojo.Role">
+        SELECT * FROM
+            XMH_ROLE
+        WHERE
+            ROLE_ID = #{roleId}
+    </select>
+
+    <!--更新角色 -->
+    <update id="updateRole" parameterType="com.my.test.pojo.Role">
+        UPDATE XMH_ROLE
+        <set>
+            <if test="name != null">
+                NAME= #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null">
+                DESCRIPTION=#{description,jdbcType=VARCHAR},
+            </if>
+            <if test="isSystem != null">
+                IS_SYSTEM = #{isSystem,jdbcType=CHAR},
+            </if>
+            <if test="createDate != null">
+                CREATE_DATE = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="modifyDate != null">
+                MODIFY_DATE = #{modifyDate,jdbcType=DATE}
+            </if>
+        </set>
+        WHERE
+            ROLE_ID = #{roleId,jdbcType=INTEGER}
+    </update>
+
+    <select id="queryRoleList" parameterType="com.my.test.pojo.Role" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            XMH_ROLE
+    </select>
+ </mapper>

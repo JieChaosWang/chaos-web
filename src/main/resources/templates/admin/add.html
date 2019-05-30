@@ -42,7 +42,7 @@
                     </li>
                 </ul>
             </div>
-            <form id="addForm" th:action="@{save}" th:method="post" class="form-horizontal" role="form">
+            <form id="addForm" th:action="@{addAdmin}" th:method="post" class="form-horizontal" role="form">
                 <div class="portlet box red-sunglo">
                     <div class="portlet-title">
                         <div class="caption">
@@ -50,14 +50,6 @@
                         </div>
                     </div>
                     <div class="portlet-body">
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#base" data-toggle="tab">基本信息</a>
-                            </li>
-                            <li>
-                                <a href="#personal" data-toggle="tab">个人资料</a>
-                            </li>
-                        </ul>
                         <div class="tab-content">
                             <div id="base" class="tab-pane fade in active">
                                 <div class="form-group">
@@ -89,26 +81,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label">设置：</label>
-                                    <div class="col-md-4">
-                                        <label class="checkbox-inline" style="padding-left: 0px;">
-                                            <input type="checkbox" name="isEnabled" value="true" checked="checked"/>是否启用
-                                            <input type="hidden" name="_isEnabled" value="false"/>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-3 control-label"><span class="required">* </span>角色：</label>
-                                    <div class="col-md-4 input">
-                                        <label class="control-label" th:each="role:${roles}">
-                                            <input type="checkbox" name="roleIds" th:value="${role.id}"/>
-                                            <label th:text="${role.name}"></label>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="personal" class="tab-pane fade">
-                                <div class="form-group">
                                     <label class="col-md-3 control-label"><span class="required">* </span>昵称：</label>
                                     <div class="col-md-4 input">
                                         <input type="text" name="nickname" class="form-control" maxlength="10"
@@ -127,6 +99,24 @@
                                     <div class="col-md-4 input">
                                         <input type="text" name="department" class="form-control" maxlength="11"
                                                placeholder="部门"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">设置：</label>
+                                    <div class="col-md-4">
+                                        <label class="checkbox-inline" style="padding-left: 0px;">
+                                            <input type="checkbox" name="isEnabled" value="true" checked="checked"/>是否启用
+                                            <input type="hidden" name="_isEnabled" value="false"/>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"><span class="required">* </span>角色：</label>
+                                    <div class="col-md-4 input">
+                                        <label class="control-label" th:each="role:${roles}">
+                                            <input type="checkbox" name="roleIds" th:value="${role.roleId}"/>
+                                            <label th:text="${role.name}"></label>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -159,11 +149,11 @@
         $addForm.validate({
             rules: {
                 username: {
-                    required: true,
-                    remote: {
-                        url: "check_username",
-                        cache: false
-                    }
+                    required: true
+                    // remote: {
+                    //     url: "check_username",
+                    //     cache: false
+                    // }
                 },
                 password: "required",
                 rePassword: {

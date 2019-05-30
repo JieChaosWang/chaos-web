@@ -79,7 +79,7 @@
                                 </thead>
                                 <tbody>
                                 <tr th:each="authority : ${page.list}">
-                                    <td><input type="checkbox" name="ids" id="ids" th:value="${authority.id}"/></td>
+                                    <td><input type="checkbox" name="ids" id="ids" th:value="${authority.authorityId}"/></td>
                                     <td>
                                         <label th:text="${authority.authorityCategory.name}"></label>
                                     </td>
@@ -96,7 +96,7 @@
                                         <label th:text="${#calendars.format(authority.createDate,'yyyy-MM-dd HH:mm:ss')}"></label>
                                     </td>
                                     <td>
-                                        <a th:href="@{|edit/${authority.id}|}" class="btn default btn-xs purple">
+                                        <a th:href="@{|edit/${authority.authorityId}|}" class="btn default btn-xs purple">
                                             <i class="icon-edit"></i> 编辑
                                         </a>
                                     </td>

@@ -15230,7 +15230,7 @@
      * @since 1.2.6.1
      */
 
-    UE.plugins['list'] = function () {
+    UE.plugins['templates.authorityCategory.list'] = function () {
         var me = this,
             notExchange = {
                 'TD': 1,
@@ -15344,7 +15344,7 @@
             customCss.push('.list-paddingleft-2{padding-left:' + me.options.listDefaultPaddingLeft + 'px}');
             customCss.push('.list-paddingleft-3{padding-left:' + me.options.listDefaultPaddingLeft * 2 + 'px}');
             //如果不给宽度会在自定应样式里出现滚动条
-            utils.cssRule('list', 'ol,ul{margin:0;pading:0;' + (browser.ie ? '' : 'width:95%') + '}li{clear:both;}' + customCss.join('\n'), me.document);
+            utils.cssRule('templates.authorityCategory.list', 'ol,ul{margin:0;pading:0;' + (browser.ie ? '' : 'width:95%') + '}li{clear:both;}' + customCss.join('\n'), me.document);
         });
         //单独处理剪切的问题
         me.ready(function () {
@@ -27233,7 +27233,7 @@
                 }
                 this.popup = new Menu({
                     items: this.items,
-                    uiName: 'list',
+                    uiName: 'templates.authorityCategory.list',
                     editor: this.editor,
                     captureWheel: true,
                     combox: this

@@ -7,18 +7,18 @@ import java.util.Date;
  */
 public class AuthorityCategory {
 
-    private  Long id;
+    private Long authorityCategoryId;
     private Date createDate;
     private Date modifyDate;
     private Integer orders;
     private String name;
 
-    public Long getId() {
-        return id;
+    public Long getAuthorityCategoryId() {
+        return authorityCategoryId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAuthorityCategoryId(Long authorityCategoryId) {
+        this.authorityCategoryId = authorityCategoryId;
     }
 
     public Date getCreateDate() {

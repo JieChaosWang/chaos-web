@@ -52,7 +52,7 @@
                             <a href="javascript:;" class="reload"></a>
                         </div>
                         <div class="actions">
-                            <a class="btn btn-default" th:href="@{add}">
+                            <a class="btn btn-default" th:href="@{addStatisticsInfoIndex}">
                                 <i class="fa fa-plus"></i>
                                 添加
                             </a>
@@ -70,13 +70,13 @@
                                 <tr>
                                     <th><input type="checkbox" id="selectAll"/>全选</th>
                                     <th>统计编号</th>
+                                    <th>被统计人</th>
                                     <th>出单数</th>
                                     <th>接线数</th>
                                     <th>微信添加数</th>
                                     <th>微信添加总数</th>
                                     <th>有效电话数</th>
                                     <th>当日签收数</th>
-                                    <th>有效电话数</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
                                 </tr>
@@ -86,6 +86,9 @@
                                     <td><input type="checkbox" name="ids" id="ids" th:value="${statistics.statisticsSeq}"/></td>
                                     <td>
                                         <label th:text="${statistics.statisticsSeq}"></label>
+                                    </td>
+                                    <td>
+                                        <label th:text="${statistics.adminName}"></label>
                                     </td>
                                     <td>
                                         <label th:text="${statistics.volumeNum}"></label>

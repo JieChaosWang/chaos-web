@@ -87,40 +87,40 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="admin:${page.content}">
-                                    <td><input type="checkbox" name="ids" th:value="${admin.id}"/></td>
+                                <tr th:each="admins : ${page.list}">
+                                    <td><input type="checkbox" name="ids" th:value="${admins.adminId}"/></td>
                                     <td>
-                                        <label th:text="${admin.username}"></label>
+                                        <label th:text="${admins.username}"></label>
                                     </td>
                                     <td>
-                                        <label th:text="${admin.email}"></label>
+                                        <label th:text="${admins.email}"></label>
                                     </td>
                                     <td>
-                                        <label th:text="${admin.nickname}"></label>
+                                        <label th:text="${admins.nickname}"></label>
                                     </td>
                                     <td>
-                                        <label th:text="${admin.name}"></label>
+                                        <label th:text="${admins.name}"></label>
                                     </td>
                                     <td>
-                                        <label th:text="${admin.department}"></label>
+                                        <label th:text="${admins.department}"></label>
                                     </td>
                                     <td>
-                                        <label th:text="${admin.loginDate==null ? '-' : #calendars.format(admin.loginDate,'yyyy-MM-dd HH:mm:ss')}"></label>
+                                        <label th:text="${admins.loginDate==null ? '-' : #calendars.format(admins.loginDate,'yyyy-MM-dd HH:mm:ss')}"></label>
                                     </td>
                                     <td>
-                                        <label th:text="${admin.loginIp==null ? '-' : admin.loginIp}"></label>
+                                        <label th:text="${admins.loginIp==null ? '-' : admins.loginIp}"></label>
                                     </td>
                                     <td>
-                                        <label th:if="${!admin.isEnabled}" style="color: red;">禁用</label>
-                                        <label th:if="${admin.isLocked}" style="color: red;">锁定</label>
-                                        <label th:if="${admin.isEnabled &amp;&amp; !admin.isLocked}"
+                                        <label th:if="${!admins.isEnabled}" style="color: red;">禁用</label>
+                                        <label th:if="${admins.isLocked}" style="color: red;">锁定</label>
+                                        <label th:if="${admins.isEnabled &amp;&amp; !admins.isLocked}"
                                                style="color: green;">正常</label>
                                     </td>
                                     <td>
-                                        <label th:text="${#calendars.format(admin.createDate,'yyyy-MM-dd HH:mm:ss')}"></label>
+                                        <label th:text="${#calendars.format(admins.createDate,'yyyy-MM-dd HH:mm:ss')}"></label>
                                     </td>
                                     <td>
-                                        <a th:href="@{|edit/${admin.id}|}" class="btn default btn-xs purple">
+                                        <a th:href="@{|edit/${admins.adminId}|}" class="btn default btn-xs purple">
                                             <i class="icon-edit"></i> 编辑
                                         </a>
                                     </td>

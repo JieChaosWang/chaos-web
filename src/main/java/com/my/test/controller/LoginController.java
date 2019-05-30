@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by wang on 2018/11/27.
  */
 @Controller
-public class LoginController {
+public class LoginController extends BaseController {
 
     @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
     public String login() {

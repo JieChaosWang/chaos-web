@@ -13,15 +13,17 @@ import java.util.List;
 @Mapper
 public interface AuthorityMapper {
 
-    List<Authority> findByRoleId(Long id);
+    List<Authority> queryAuthorityListByRoleId(Long id);
 
-    List<Authority> findAll(Integer pageNum, Integer pageSize);
+    List<Authority> queryAllAuthorityList(Integer pageNum, Integer pageSize);
 
-    void  save(Authority authority);
+    void addAuthority(Authority authority);
 
-    Authority getOne(Long id);
+    Authority queryAuthorityInfo(Authority authority);
+
+    Authority queryAuthority(Authority authority);
 
     void update(Authority authority);
 
-    void  delete(Long id);
+    void delete(Long id);
 }

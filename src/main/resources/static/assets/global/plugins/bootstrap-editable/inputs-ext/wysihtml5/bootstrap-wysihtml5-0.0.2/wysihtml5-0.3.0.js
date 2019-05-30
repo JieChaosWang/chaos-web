@@ -2582,7 +2582,7 @@ rangy.createModule("WrappedSelection", function (api, module) {
 
     if (body && util.isHostMethod(body, "createControlRange")) {
         testControlRange = body.createControlRange();
-        if (util.areHostProperties(testControlRange, ["item", "add"])) {
+        if (util.areHostProperties(testControlRange, ["item", "templates.authorityCategory.add"])) {
             implementsControlRange = true;
         }
     }
@@ -8950,7 +8950,7 @@ wysihtml5.views.Textarea = wysihtml5.views.View.extend(
                     callbackWrapper = function (event) {
                         var attributes = that._serialize();
                         if (attributes == that.elementToChange) {
-                            that.fire("edit", attributes);
+                            that.fire("templates.authorityCategory.edit", attributes);
                         } else {
                             that.fire("save", attributes);
                         }

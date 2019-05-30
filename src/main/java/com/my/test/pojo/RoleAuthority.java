@@ -6,7 +6,7 @@ package com.my.test.pojo;
 public class RoleAuthority {
 
     private Long roles_id;
-    private  Long authorities_id;
+    private Long authorities_id;
 
     public Long getRoles_id() {
         return roles_id;

@@ -3,6 +3,7 @@
 <mapper namespace="com.my.test.mapper.StatisticsInfoMapper" >
     <resultMap id="StatisticsResultMap" type="com.my.test.pojo.StatisticsInfo" >
         <id column="STATISTICS_SEQ" property="statisticsSeq" jdbcType="INTEGER" />
+        <id column="ADMIN_ID" property="adminId" jdbcType="BIGINT" />
         <result column="VOLUME_NUM" property="volumeNum" jdbcType="INTEGER" />
         <result column="CONNECTION_NUM" property="connectionNum" jdbcType="INTEGER" />
         <result column="WECHAT_ADD_NUM" property="wechatAddNum" jdbcType="INTEGER" />
@@ -12,29 +13,32 @@
         <result column="CREATE_TIME" property="createTime" jdbcType="INTEGER" />
     </resultMap>
     <sql id="Base_Column_List" >
-        STATISTICS_SEQ, VOLUME_NUM, CONNECTION_NUM, WECHAT_ADD_NUM,EFFECTIVE_CALL_NUM,WECHAT_ADD_ALL_NUM,TODAY_SIGNED_NUM,CREATE_TIME
+        STATISTICS_SEQ, ADMIN_ID, VOLUME_NUM, CONNECTION_NUM, WECHAT_ADD_NUM,EFFECTIVE_CALL_NUM,WECHAT_ADD_ALL_NUM,TODAY_SIGNED_NUM,CREATE_TIME
     </sql>
 
     <!--添加统计信息 -->
     <insert id="addStatisticsInfo" parameterType="com.my.test.pojo.StatisticsInfo">
         INSERT INTO STATISTICS_INFO
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="volumeNum != null">
+            <if test="adminId != null and adminId !='' ">
+                ADMIN_ID,
+            </if>
+            <if test="volumeNum != null and volumeNum !='' ">
                 VOLUME_NUM,
             </if>
-            <if test="connectionNum !=''">
+            <if test="connectionNum !='' and connectionNum !='' ">
                 CONNECTION_NUM,
             </if>
-            <if test="wechatAddNum != null">
+            <if test="wechatAddNum != null and wechatAddNum !='' ">
                 WECHAT_ADD_NUM,
             </if>
-            <if test="effectiveCallNum != null">
+            <if test="effectiveCallNum != null and effectiveCallNum !='' ">
                 EFFECTIVE_CALL_NUM,
             </if>
-            <if test="wechatAddAllNum != null">
+            <if test="wechatAddAllNum != null and wechatAddAllNum !='' ">
                 WECHAT_ADD_ALL_NUM,
             </if>
-            <if test="todaySignedNum !=''">
+            <if test="todaySignedNum !='' and todaySignedNum!='' ">
                 TODAY_SIGNED_NUM,
             </if>
             <if test="createTime != null">
@@ -42,6 +46,9 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminId != null and adminId !='' ">
+                #{adminId},
+            </if>
             <if test="volumeNum != null and volumeNum !='' ">
                 #{volumeNum},
             </if>
@@ -77,22 +84,25 @@
     <update id="updateStatisticsInfo" parameterType="com.my.test.pojo.StatisticsInfo">
         UPDATE STATISTICS_INFO
         <set>
-            <if test="volumeNum != null">
+            <if test="adminId != null and adminId !='' ">
+                ADMIN_ID= #{adminId,jdbcType=BIGINT},
+            </if>
+            <if test="volumeNum != null and volumeNum !='' ">
                 VOLUME_NUM= #{volumeNum,jdbcType=INTEGER},
             </if>
-            <if test="connectionNum != null">
+            <if test="connectionNum != null and connectionNum !='' ">
                 CONNECTION_NUM = #{connectionNum,jdbcType=INTEGER},
             </if>
-            <if test="wechatAddNum != null">
+            <if test="wechatAddNum != null and wechatAddNum !='' ">
                 WECHAT_ADD_NUM=#{wechatAddNum,jdbcType=INTEGER},
             </if>
-            <if test="effectiveCallNum != null">
+            <if test="effectiveCallNum != null and effectiveCallNum !='' ">
                 EFFECTIVE_CALL_NUM = #{effectiveCallNum,jdbcType=INTEGER},
             </if>
-            <if test="wechatAddAllNum != null">
+            <if test="wechatAddAllNum != null and wechatAddAllNum !='' ">
                 WECHAT_ADD_ALL_NUM = #{wechatAddAllNum,jdbcType=INTEGER},
             </if>
-            <if test="todaySignedNum != null">
+            <if test="todaySignedNum != null and todaySignedNum!='' ">
                 TODAY_SIGNED_NUM = #{todaySignedNum,jdbcType=INTEGER}
             </if>
         </set>

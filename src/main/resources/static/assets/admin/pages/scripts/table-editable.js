@@ -141,7 +141,7 @@ var TableEditable = function () {
             }
         });
 
-        table.on('click', '.edit', function (e) {
+        table.on('click', '.templates.authorityCategory.edit', function (e) {
             e.preventDefault();
 
             /* Get the row as a parent of the link that was clicked on */

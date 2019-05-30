@@ -8,22 +8,22 @@ import java.util.List;
  */
 public class Authority {
 
-    private  Long id;
+    private Long authorityId;
     private Date createDate;
-    private  Date modifyDate;
-    private  String name;
+    private Date modifyDate;
+    private String name;
     private String path;
-    private  String  authorityValue;
+    private String authorityValue;
     private Long authorityCategoryId;
     private AuthorityCategory authorityCategory;
     private List<Role> roles;
 
-    public Long getId() {
-        return id;
+    public Long getAuthorityId() {
+        return authorityId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setAuthorityId(Long authorityId) {
+        this.authorityId = authorityId;
     }
 
     public Date getCreateDate() {

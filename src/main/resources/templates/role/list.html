@@ -73,17 +73,22 @@
                                     <th>是否内置</th>
                                     <th>描述</th>
                                     <th>创建时间</th>
+                                    <th>修改时间</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="role:${page.content}">
-                                    <td><input type="checkbox" name="ids" th:value="${role.id}"/></td>
+                                <tr th:each="role : ${page.list}">
+                                    <td><input type="checkbox" name="ids" th:value="${role.roleId}"/></td>
                                     <td>
                                         <label th:text="${role.name}"></label>
                                     </td>
                                     <td>
-                                        <label th:text="${role.isSystem?'是':'否'}"></label>
+                                        <!--<label th:text="${role.isSystem?'是':'否'}"></label>-->
+
+                                        <label th:if="${role.isSystem == '1'}">是</label>
+                                        <label th:if="${role.isSystem == '0'}">否</label>
+
                                     </td>
                                     <td>
                                         <label th:text="${role.description}"></label>
@@ -92,7 +97,10 @@
                                         <label th:text="${#calendars.format(role.createDate,'yyyy-MM-dd HH:mm:ss')}"></label>
                                     </td>
                                     <td>
-                                        <a th:href="@{|edit/${role.id}|}" class="btn default btn-xs purple">
+                                        <label th:text="${#calendars.format(role.modifyDate,'yyyy-MM-dd HH:mm:ss')}"></label>
+                                    </td>
+                                    <td>
+                                        <a th:href="@{|edit/${role.roleId}|}" class="btn default btn-xs purple">
                                             <i class="icon-edit"></i> 编辑
                                         </a>
                                     </td>

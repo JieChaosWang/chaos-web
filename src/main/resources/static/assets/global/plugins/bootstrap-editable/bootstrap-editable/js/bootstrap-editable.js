@@ -2482,7 +2482,7 @@
 /**
  List - abstract class for inputs that have source option loaded from js array or via ajax
 
- @class list
+ @class templates.authorityCategory.list
  @extends abstractinput
  **/
 (function ($) {
@@ -3060,7 +3060,7 @@
  Select (dropdown)
 
  @class select
- @extends list
+ @extends templates.authorityCategory.list
  @final
  @example
  <a href="#" id="status" data-type="select" data-pk="1" data-url="/post" data-original-title="Select status"></a>
@@ -3157,7 +3157,7 @@
  Internally value stored as javascript array of values.
 
  @class checklist
- @extends list
+ @extends templates.authorityCategory.list
  @final
  @example
  <a href="#" id="options" data-type="checklist" data-pk="1" data-url="/post" data-original-title="Select options"></a>
@@ -6635,7 +6635,7 @@ Editableform based on Twitter Bootstrap
  User can submit only values that are in source (otherwise `null` is submitted). This is more like *dropdown* behavior.
 
  @class typeahead
- @extends list
+ @extends templates.authorityCategory.list
  @since 1.4.1
  @final
  @example

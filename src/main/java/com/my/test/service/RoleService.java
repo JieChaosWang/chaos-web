@@ -9,4 +9,10 @@ import java.util.List;
  */
 public interface RoleService {
 
+    Role queryRole(Role role);
+
+    void addRole(Role role) throws Exception;
+
+    List<Role> queryRoleList(Role role);
+
 }

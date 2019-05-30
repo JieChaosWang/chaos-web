@@ -38,45 +38,60 @@
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a th:href="@{/authority/list}">权限管理</a>
+                        <a th:href="@{/statistics/list}">统计管理</a>
                     </li>
                 </ul>
             </div>
-            <form id="addForm" th:action="@{save}" th:method="post" class="form-horizontal" role="form">
+            <form id="addForm" th:action="@{addStatisticsInfo}" th:method="post" class="form-horizontal" role="form">
                 <div class="portlet box red-sunglo">
                     <div class="portlet-title">
                         <div class="caption">
-                            <i class="fa fa-plus"></i>权限添加
+                            <i class="fa fa-plus"></i>添加统计
                         </div>
                     </div>
                     <div class="portlet-body">
                         <div class="form-group">
-                            <label class="col-md-3 control-label"><span class="required">* </span>权限分类：</label>
+                            <label class="col-md-3 control-label"><span class="required">* </span>被统计人：</label>
                             <div class="col-md-4">
-                                <select name="authorityCategoryId" class="form-control">
-                                    <option th:each="authorityCategory:${authorityCategoryTree}"
-                                            th:value="${authorityCategory.id}"
-                                            th:text="${authorityCategory.name}"></option>
+                                <select name="adminId" class="form-control">
+                                    <option th:each="admin:${list}" th:value="${admin.adminId}" th:text="${admin.name}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label"><span class="required">* </span>权限名称：</label>
+                            <label class="col-md-3 control-label"><span class="required">* </span>出单数：</label>
                             <div class="col-md-4 input">
-                                <input type="text" name="name" class="form-control" maxlength="20" placeholder="权限名称"/>
+                                <input type="text" name="volumeNum" class="form-control" maxlength="20" placeholder="出单数"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label"><span class="required">* </span>访问路径：</label>
+                            <label class="col-md-3 control-label"><span class="required">* </span>接线数：</label>
                             <div class="col-md-4 input">
-                                <input type="text" name="path" class="form-control" maxlength="50" placeholder="访问路径"/>
+                                <input type="text" name="connectionNum" class="form-control" maxlength="20" placeholder="接线数"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label"><span class="required">* </span>权限：</label>
+                            <label class="col-md-3 control-label"><span class="required">* </span>微信添加数：</label>
                             <div class="col-md-4 input">
-                                <input type="text" name="authorityValue" class="form-control" maxlength="50"
-                                       placeholder="权限"/>
+                                <input type="text" name="wechatAddNum" class="form-control" maxlength="50" placeholder="微信添加数"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span class="required">* </span>有效电话数：</label>
+                            <div class="col-md-4 input">
+                                <input type="text" name="effectiveCallNum" class="form-control" maxlength="50" placeholder="有效电话数"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span class="required">* </span>微信添加总数：</label>
+                            <div class="col-md-4 input">
+                                <input type="text" name="wechatAddAllNum" class="form-control" maxlength="50" placeholder="微信添加总数"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label"><span class="required">* </span>当日签收数：</label>
+                            <div class="col-md-4 input">
+                                <input type="text" name="todaySignedNum" class="form-control" maxlength="50" placeholder="当日签收数"/>
                             </div>
                         </div>
                         <div class=" form-actions fluid">
@@ -106,9 +121,12 @@
         var $addForm = $("#addForm");
         $addForm.validate({
             rules: {
-                name: "required",
-                path: "required",
-                authorityValue: "required"
+                volumeNum: "required",
+                wechatAddNum: "required",
+                effectiveCallNum: "required",
+                wechatAddAllNum: "required",
+                todaySignedNum: "required",
+                todaySignedNum: "required"
             }
         });
     });

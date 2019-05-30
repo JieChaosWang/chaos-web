@@ -1,10 +1,9 @@
 package com.my.test.mapper;
 
-import com.github.pagehelper.Page;
 import com.my.test.pojo.Admin;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.awt.print.Pageable;
+import java.util.List;
 
 /**
  * Created by wang on 2018/11/26.
@@ -12,13 +11,13 @@ import java.awt.print.Pageable;
 @Mapper
 public interface AdminMapper {
 
-   Admin findByUsername(String username);
+    Admin queryAdminInfo(Admin admin);
 
-   void  update(Admin admin);
+    Admin queryAdmin(Admin admin);
 
-   Page<Admin> findAll(Pageable pageable);
+    void updateAdmin(Admin admin);
 
+    void addAdmin(Admin admin);
 
-
-
+    List<Admin> queryAdminList(Admin admin);
 }

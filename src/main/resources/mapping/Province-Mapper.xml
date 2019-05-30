@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.my.test.mapper.ProvinceMapper" >
+ <resultMap id="ProvinceMap" type="com.my.test.pojo.Province" >
+    <id column="PROVINCEID" property="provinceId" jdbcType="INTEGER" />
+    <result column="PROVINCECODE" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="PROVINCENAME" property="provinceName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="CityMap" type="com.my.test.pojo.City" >
+    <id column="CITYID" property="cityId" jdbcType="INTEGER" />
+    <result column="CITYNAME" property="cityName" jdbcType="VARCHAR" />
+    <result column="CITYCODE" property="cityCode" jdbcType="VARCHAR" />
+    <result column="PROVINCECODE" property="provinceCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="AreaMap" type="com.my.test.pojo.Area" >
+    <id column="AREAID" property="areaId" jdbcType="INTEGER" />
+    <result column="AREACODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREANAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="CITYCODE" property="cityCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="queryProvinceListPage" resultMap="ProvinceMap">
+    SELECT * FROM DATA_PROVINCE ORDER BY PROVINCEID
+  </select>
+  <select id="queryCityListPage" resultMap="CityMap">
+    SELECT * FROM DATA_CITY ORDER BY CITYID
+  </select>
+  <select id="queryAreaListPage" resultMap="AreaMap">
+    SELECT * FROM DATA_AREA ORDER BY AREAID
+  </select>
+  <select id="queryCityListById" parameterType="java.lang.String" resultMap="CityMap">
+    SELECT
+		DC.CITYID, DC.CITYCODE, DC.CITYNAME, DC.PROVINCECODE
+		FROM DATA_CITY DC LEFT JOIN DATA_PROVINCE DP ON
+		DC.PROVINCECODE=DP.PROVINCECODE
+		WHERE DP.PROVINCEID=#{provinceid}
+  </select>
+  <select id="queryAreaListById" parameterType="java.lang.String" resultMap="AreaMap">
+    SELECT
+		A.AREAID, A.AREACODE, A.AREANAME, A.CITYCODE
+		FROM DATA_AREA A
+		INNER JOIN DATA_CITY B ON A.CITYCODE=B.CITYCODE
+		WHERE	CITYID=#{cityid}
+  </select>
+  <select id="getProvinceNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+    SELECT T.PROVINCENAME FROM DATA_PROVINCE T WHERE T.PROVINCEID=#{provinceId}
+  </select>
+  <select id="getCityNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+    SELECT T.CITYNAME FROM DATA_CITY T WHERE T.CITYID=#{cityId}
+  </select>
+  <select id="getAreaNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+    SELECT T.AREANAME FROM DATA_AREA T WHERE T.AREAID=#{areaId}
+  </select>
+</mapper>

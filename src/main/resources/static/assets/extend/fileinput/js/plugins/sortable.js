@@ -969,7 +969,7 @@
 
                         if (newIndex >= 0) {
                             // Add event
-                            _dispatchEvent(null, parentEl, 'add', dragEl, parentEl, rootEl, oldIndex, newIndex);
+                            _dispatchEvent(null, parentEl, 'templates.authorityCategory.add', dragEl, parentEl, rootEl, oldIndex, newIndex);
 
                             // Remove event
                             _dispatchEvent(this, rootEl, 'remove', dragEl, parentEl, rootEl, oldIndex, newIndex);

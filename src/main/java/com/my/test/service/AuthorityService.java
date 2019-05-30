@@ -11,15 +11,15 @@ import java.util.List;
  */
 public interface AuthorityService {
 
-    List<Authority> findByRoleId(Long id);
+    List<Authority> queryAuthorityListByRoleId(Long id);
 
-    List<Authority> findAll(Integer pageNum, Integer pageSize);
+    List<Authority> queryAllAuthorityList(Integer pageNum, Integer pageSize);
 
-    void save(Authority authority);
+    void addAuthority(Authority authority);
 
-    Authority getOne(Long id);
+    Authority queryAuthority(Authority authority);
 
-    void update(Authority authority);
+    void updateAuthority(Authority authority);
 
-    Authority  delete(Long[] ids);
+    void deleteAuthority(Long[] ids);
 }

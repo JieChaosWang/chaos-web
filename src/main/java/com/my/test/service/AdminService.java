@@ -11,9 +11,11 @@ import java.util.List;
  */
 public interface AdminService {
 
-    Admin findByUsername(String username);
+    void addAdmin(Admin admin);
 
-    void  update(Admin admin);
+    Admin queryAdmin(Admin admin);
 
-    Page<Admin> findAll(Pageable pageable);
+    void updateAdmin(Admin admin);
+
+    List<Admin> queryAdminList(Admin admin);
 }

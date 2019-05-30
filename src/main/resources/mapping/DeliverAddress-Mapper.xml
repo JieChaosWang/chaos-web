@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.my.test.mapper.DeliverAddressMapper">
+    <resultMap id="BaseResultMap" type="com.my.test.pojo.DeliverAddress">
+        <id column="DELIVER_SEQ" property="deliverSeq" jdbcType="INTEGER" />
+        <result column="CUST_SEQ" property="custSeq" jdbcType="VARCHAR" />
+        <result column="PROVINCEID" property="provinceid" jdbcType="INTEGER" />
+        <result column="CITYID" property="cityid" jdbcType="INTEGER" />
+        <result column="AREAID" property="areaid" jdbcType="INTEGER" />
+        <result column="TOWNID" property="townId" jdbcType="INTEGER" />
+        <result column="IS_DEFAULT_ADD" property="isDefaultAdd" jdbcType="CHAR" />
+        <result column="ADDRESS_ZH" property="addressZh" jdbcType="VARCHAR" />
+        <result column="CONTACT" property="contact" jdbcType="VARCHAR" />
+        <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+        <result column="POSTCODE" property="postcode" jdbcType="VARCHAR" />
+        <result column="MER_FLAG" property="merFlag" jdbcType="VARCHAR" />
+        <result column="PROVINCE_NAME" property="provinceName" jdbcType="VARCHAR" />
+	    <result column="CITY_NAME" property="cityName" jdbcType="VARCHAR" />
+	    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+	    <result column="TOWN_NAME" property="townName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_colum_list">
+        DELIVER_SEQ,CUST_SEQ,PROVINCEID,CITYID,AREAID,TOWNID,IS_DEFAULT_ADD,ADDRESS_ZH,CONTACT,TELEPHONE,POSTCODE,
+        MER_FLAG,PROVINCE_NAME,CITY_NAME,AREA_NAME,TOWN_NAME
+    </sql>
+
+    <insert id="addDeliverAddress" parameterType="com.my.test.pojo.DeliverAddress">
+        INSERT INTO DELIVER_ADDRESS
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deliverSeq !=null">DELIVER_SEQ,</if>
+            <if test="custSeq !=null">CUST_SEQ,</if>
+            <if test="provinceid !=null">PROVINCEID,</if>
+            <if test="cityid !=null">CITYID,</if>
+            <if test="areaid !=null">AREAID,</if>
+            <if test="townId !=null">TOWNID,</if>
+            <if test="isDefaultAdd !=null">IS_DEFAULT_ADD,</if>
+            <if test="addressZh !=null">ADDRESS_ZH,</if>
+            <if test="contact !=null">CONTACT,</if>
+            <if test="telephone !=null">TELEPHONE,</if>
+            <if test="postcode !=null">POSTCODE,</if>
+            <if test="merFlag !=null">MER_FLAG,</if>
+            <if test="provinceName != null" >
+	        	PROVINCE_NAME,
+	      	</if>
+	      	<if test="cityName != null" >
+	        	CITY_NAME,
+	      	</if>
+	      	<if test="areaName != null" >
+	        	AREA_NAME,
+	      	</if>
+	      	<if test="townName != null" >
+	        	TOWN_NAME,
+	      	</if>
+			<if test="alterTime != null and alterTime!=''">
+				ALTER_TIME,
+			</if>
+			<if test="createTime != null and createTime!=''">
+				CREATE_TIME,
+			</if>
+        </trim>
+        <trim prefix="VALUES(" suffix=")" suffixOverrides=",">
+            <if test="deliverSeq !=null">#{deliverSeq,jdbcType=INTEGER},</if>
+            <if test="custSeq !=null">#{custSeq,jdbcType=VARCHAR},</if>
+            <if test="provinceid !=null">#{provinceid,jdbcType=INTEGER},</if>
+            <if test="cityid !=null">#{cityid,jdbcType=INTEGER},</if>
+            <if test="areaid !=null">#{areaid,jdbcType=INTEGER},</if>
+            <if test="townId !=null">#{townId,jdbcType=INTEGER},</if>
+            <if test="isDefaultAdd !=null">#{isDefaultAdd,jdbcType=CHAR},</if>
+            <if test="addressZh !=null">#{addressZh,jdbcType=VARCHAR},</if>
+            <if test="contact !=null">#{contact,jdbcType=VARCHAR},</if>
+            <if test="telephone !=null">#{telephone,jdbcType=VARCHAR},</if>
+            <if test="postcode !=null">#{postcode,jdbcType=VARCHAR},</if>
+            <if test="merFlag !=null">#{merFlag,jdbcType=VARCHAR},</if>
+            <if test="provinceName != null" >
+        		#{provinceName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="cityName != null" >
+	        	#{cityName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="areaName != null" >
+	        	#{areaName,jdbcType=VARCHAR},
+	      	</if>
+	      	<if test="townName != null" >
+	        	#{townName,jdbcType=VARCHAR},
+	      	</if>
+			<if test="alterTime != null and alterTime!=''">
+				#{alterTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createTime != null and createTime!=''">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+        </trim>
+    </insert>
+    
+    
+    <select id="queryDeliverAddressCount" resultType="java.lang.Integer" parameterType="com.my.test.pojo.DeliverAddress">
+        SELECT COUNT(DELIVER_SEQ) FROM DELIVER_ADDRESS   <where>
+            <if test="deliverSeq !=null"> AND DELIVER_SEQ = #{deliverSeq,jdbcType=INTEGER}</if>
+            <if test="custSeq !=null"> AND CUST_SEQ = #{custSeq,jdbcType=VARCHAR}</if>
+            <if test="provinceid !=null"> AND PROVINCEID = #{provinceid,jdbcType=INTEGER}</if>
+            <if test="cityid !=null"> AND CITYID = #{cityid,jdbcType=INTEGER}</if>
+            <if test="areaid !=null"> AND AREAID = #{areaid,jdbcType=INTEGER}</if>
+            <if test="townId !=null">AND TOWNID = #{townId,jdbcType=INTEGER}</if>
+            <if test="isDefaultAdd !=null"> AND IS_DEFAULT_ADD = #{isDefaultAdd,jdbcType=CHAR}</if>
+            <if test="addressZh !=null"> AND ADDRESS_ZH = #{addressZh,jdbcType=VARCHAR}</if>
+            <if test="contact !=null"> AND CONTACT = #{contact,jdbcType=VARCHAR}</if>
+            <if test="telephone !=null"> AND TELEPHONE = #{telephone,jdbcType=VARCHAR}</if>
+            <if test="postcode !=null"> AND POSTCODE = #{postcode,jdbcType=VARCHAR}</if>
+            <if test="merFlag !=null">AND MER_FLAG=#{merFlag,jdbcType=VARCHAR}</if>
+        </where>
+    </select>
+    
+    <update id="updateDeliverAddress" parameterType="com.my.test.pojo.DeliverAddress">
+        UPDATE DELIVER_ADDRESS
+        <set>
+            <if test="custSeq !=null">CUST_SEQ = #{custSeq,jdbcType=VARCHAR},</if>
+            <if test="provinceid !=null">PROVINCEID = #{provinceid,jdbcType=INTEGER},</if>
+            <if test="cityid !=null">CITYID = #{cityid,jdbcType=INTEGER},</if>
+            <if test="areaid !=null">AREAID = #{areaid,jdbcType=INTEGER},</if>
+            <if test="townId !=null">TOWNID = #{townId,jdbcType=INTEGER},</if>
+            <if test="isDefaultAdd !=null">IS_DEFAULT_ADD = #{isDefaultAdd,jdbcType=CHAR},</if>
+            <if test="addressZh !=null">ADDRESS_ZH = #{addressZh,jdbcType=VARCHAR},</if>
+            <if test="contact !=null">CONTACT = #{contact,jdbcType=VARCHAR},</if>
+            <if test="telephone !=null">TELEPHONE = #{telephone,jdbcType=VARCHAR},</if>
+            <if test="postcode !=null">POSTCODE = #{postcode,jdbcType=VARCHAR},</if>
+            <if test="merFlag !=null">MER_FLAG=#{merFlag,jdbcType=VARCHAR},</if>
+            <if test="provinceName != null" > PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR}, </if>
+      		<if test="cityName != null" > CITY_NAME = #{cityName,jdbcType=VARCHAR}, </if>
+      		<if test="areaName != null" > AREA_NAME = #{areaName,jdbcType=VARCHAR}, </if>
+      		<if test="townName != null" > TOWN_NAME = #{townName,jdbcType=VARCHAR}, </if>
+      		<if test="alterTime != null and alterTime !=''">
+				ALTER_TIME = #{alterTime,jdbcType=TIMESTAMP},
+			</if>
+        </set>
+        WHERE DELIVER_SEQ = #{deliverSeq}
+    </update>
+    <delete id="deleteDeliverAddress" parameterType="com.my.test.pojo.DeliverAddress">
+        DELETE FROM DELIVER_ADDRESS
+        WHERE DELIVER_SEQ = #{deliverSeq}
+    </delete>
+    <select id="queryDeliverAddressInfo" resultMap="BaseResultMap" parameterType="com.my.test.pojo.DeliverAddress">
+        SELECT <include refid="Base_colum_list"/> FROM DELIVER_ADDRESS
+        <where>
+            <if test="deliverSeq !=null"> AND DELIVER_SEQ = #{deliverSeq,jdbcType=VARCHAR}</if>
+            <if test="custSeq !=null"> AND CUST_SEQ = #{custSeq,jdbcType=VARCHAR}</if>
+            <if test="provinceid !=null"> AND PROVINCEID = #{provinceid,jdbcType=INTEGER}</if>
+            <if test="cityid !=null"> AND CITYID = #{cityid,jdbcType=INTEGER}</if>
+            <if test="areaid !=null"> AND AREAID = #{areaid,jdbcType=INTEGER}</if>
+            <if test="townId !=null">AND TOWNID = #{townId,jdbcType=INTEGER}</if>
+            <if test="isDefaultAdd !=null"> AND IS_DEFAULT_ADD = #{isDefaultAdd,jdbcType=CHAR}</if>
+            <if test="addressZh !=null"> AND ADDRESS_ZH = #{addressZh,jdbcType=VARCHAR}</if>
+            <if test="contact !=null"> AND CONTACT = #{contact,jdbcType=VARCHAR}</if>
+            <if test="telephone !=null"> AND TELEPHONE = #{telephone,jdbcType=VARCHAR}</if>
+            <if test="postcode !=null"> AND POSTCODE = #{postcode,jdbcType=VARCHAR}</if>
+            <if test="merFlag !=null">AND MER_FLAG=#{merFlag,jdbcType=VARCHAR}</if>
+        </where>
+    </select>
+
+    <select id="queryDeliverAddressListPage" resultMap="BaseResultMap" parameterType="com.my.test.pojo.DeliverAddress">
+        SELECT <include refid="Base_colum_list"/> FROM DELIVER_ADDRESS
+        <where>
+            <if test="deliverSeq !=null"> AND DELIVER_SEQ = #{deliverSeq,jdbcType=INTEGER}</if>
+            <if test="custSeq !=null"> AND CUST_SEQ = #{custSeq,jdbcType=VARCHAR}</if>
+            <if test="provinceid !=null"> AND PROVINCEID = #{provinceid,jdbcType=INTEGER}</if>
+            <if test="cityid !=null"> AND CITYID = #{cityid,jdbcType=INTEGER}</if>
+            <if test="areaid !=null"> AND AREAID = #{areaid,jdbcType=INTEGER}</if>
+            <if test="townId !=null">AND TOWNID = #{townId,jdbcType=INTEGER}</if>
+            <if test="isDefaultAdd !=null"> AND IS_DEFAULT_ADD = #{isDefaultAdd,jdbcType=CHAR}</if>
+            <if test="addressZh !=null"> AND ADDRESS_ZH = #{addressZh,jdbcType=VARCHAR}</if>
+            <if test="contact !=null"> AND CONTACT = #{contact,jdbcType=VARCHAR}</if>
+            <if test="telephone !=null"> AND TELEPHONE = #{telephone,jdbcType=VARCHAR}</if>
+            <if test="postcode !=null"> AND POSTCODE = #{postcode,jdbcType=VARCHAR}</if>
+            <if test="merFlag !=null">AND MER_FLAG=#{merFlag,jdbcType=VARCHAR}</if>
+        </where>
+        ORDER BY DELIVER_SEQ DESC
+    </select>
+</mapper>

@@ -427,7 +427,7 @@
 
             var buttonClass = style ? style : this.options.style;
 
-            if (status == 'add') {
+            if (status == 'templates.authorityCategory.add') {
                 this.$button.addClass(buttonClass);
             } else if (status == 'remove') {
                 this.$button.removeClass(buttonClass);

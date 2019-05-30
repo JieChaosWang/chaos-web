@@ -608,7 +608,7 @@
             }
 
             if (this.manager.options.cache > 0) {
-                this.manager.cacheManager.synchronize(oNode.isSaved() ? 'edit' : 'add', oNode);
+                this.manager.cacheManager.synchronize(oNode.isSaved() ? 'templates.authorityCategory.edit' : 'templates.authorityCategory.add', oNode);
             }
 
             oNode.render();
@@ -1018,11 +1018,11 @@
         synchronize: function (method, oNode, params) {
             if (oNode.parent > 0) {
                 switch (method) {
-                    case 'add':
+                    case 'templates.authorityCategory.add':
                         this._synchronizeAdd(oNode);
                         break;
 
-                    case 'edit':
+                    case 'templates.authorityCategory.edit':
                         this._synchronizeEdit(oNode);
                         break;
 
@@ -1124,7 +1124,7 @@
                 }
             });
             this.synchronize('delete', params.oOldNode);
-            this.synchronize('add', oNode);
+            this.synchronize('templates.authorityCategory.add', oNode);
         },
 
         isSortDefined: function () {

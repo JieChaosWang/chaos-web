@@ -43,7 +43,7 @@
                 </ul>
             </div>
             <form id="editForm" th:action="@{/authority/update}" th:method="post" class="form-horizontal" role="form">
-                <input type="hidden" name="id" th:value="${authority.id}"/>
+                <input type="hidden" name="id" th:value="${authority.authorityId}"/>
                 <div class="portlet box red-sunglo">
                     <div class="portlet-title">
                         <div class="caption">
@@ -56,8 +56,8 @@
                             <div class="col-md-4">
                                 <select name="authorityCategoryId" class="form-control">
                                     <option th:each="authorityCategory:${authorityCategoryTree}"
-                                            th:value="${authorityCategory.id}" th:text="${authorityCategory.name}"
-                                            th:selected="${authority.authorityCategoryId == authorityCategory.id}"></option>
+                                            th:value="${authorityCategory.authorityCategoryId}" th:text="${authorityCategory.name}"
+                                            th:selected="${authority.authorityCategoryId == authorityCategory.authorityCategoryId}"></option>
                                 </select>
                             </div>
                         </div>

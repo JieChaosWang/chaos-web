@@ -2966,7 +2966,7 @@
             this.added = true;
 
             // fire an event for internal hooks
-            fireEvent(this, 'add');
+            fireEvent(this, 'templates.authorityCategory.add');
 
             return this;
         },
@@ -4377,7 +4377,7 @@
              * After the text element is added, get the desired size of the border box
              * and add it before the text in the DOM.
              */
-            addEvent(wrapper, 'add', getSizeAfterAdd);
+            addEvent(wrapper, 'templates.authorityCategory.add', getSizeAfterAdd);
 
             /*
 		 * Add specific attribute setters.
@@ -4506,7 +4506,7 @@
                  * Destroy and release memory.
                  */
                 destroy: function () {
-                    removeEvent(wrapper, 'add', getSizeAfterAdd);
+                    removeEvent(wrapper, 'templates.authorityCategory.add', getSizeAfterAdd);
 
                     // Added by button implementation
                     removeEvent(wrapper.element, 'mouseenter');
@@ -4617,7 +4617,7 @@
                 }
 
                 // fire an event for internal hooks
-                fireEvent(wrapper, 'add');
+                fireEvent(wrapper, 'templates.authorityCategory.add');
 
                 return wrapper;
             },
@@ -5341,7 +5341,7 @@
                                 applyRadialGradient();
                             } else {
                                 // We need to know the bounding box to get the size and position right
-                                addEvent(wrapper, 'add', applyRadialGradient);
+                                addEvent(wrapper, 'templates.authorityCategory.add', applyRadialGradient);
                             }
 
                             // The fill element's color attribute is broken in IE8 standards mode, so we

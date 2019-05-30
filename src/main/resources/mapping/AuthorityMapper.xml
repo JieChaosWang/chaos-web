@@ -1,91 +1,124 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.my.test.mapper.AuthorityMapper" >
+<mapper namespace="com.my.test.mapper.AuthorityMapper">
     <resultMap id="BaseResultMap" type="com.my.test.pojo.Authority">
-        <id column="id" property="id" jdbcType="BIGINT" />
-        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
-        <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
-        <result column="name" property="name" jdbcType="VARCHAR" />
-        <result column="authority_value" property="authorityValue" jdbcType="VARCHAR" />
-        <result column="authority_category_id" property="authorityCategoryId" jdbcType="BIGINT" />
-        <result column="path" property="path" jdbcType="VARCHAR" />
+        <id column="AUTHORITY_ID" property="authorityId" jdbcType="BIGINT"/>
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="AUTHORITY_VALUE" property="authorityValue" jdbcType="VARCHAR"/>
+        <result column="AUTHORITY_CATEGORY_ID" property="authorityCategoryId" jdbcType="BIGINT"/>
+        <result column="PATH" property="path" jdbcType="VARCHAR"/>
     </resultMap>
+
     <resultMap id="authorityMap" type="com.my.test.pojo.Authority" extends="BaseResultMap">
         <association property="authorityCategory" javaType="com.my.test.pojo.AuthorityCategory">
-            <id column="id" property="id"/>
-            <result column="name" property="name"/>
+            <id column="AUTHORITY_CATEGORY_ID" property="authorityCategoryId"/>
+            <result column="NAME" property="name"/>
         </association>
     </resultMap>
+
     <resultMap id="RoleAndAuthorityMap" type="com.my.test.pojo.Authority" extends="BaseResultMap">
         <collection property="roles" ofType="com.my.test.pojo.Role">
-            <id column="id" property="id" jdbcType="BIGINT" />
-            <result column="is_system" property="isSystem" jdbcType="VARCHAR" />
-            <result column="name" property="name" jdbcType="VARCHAR" />
+            <id column="ROLE_ID" property="roleId" jdbcType="BIGINT"/>
+            <result column="IS_SYSTEM" property="isSystem" jdbcType="VARCHAR"/>
+            <result column="NAME" property="name" jdbcType="VARCHAR"/>
         </collection>
     </resultMap>
-    <sql id="Base_Column_List" >
-        id, create_date, modify_date,name,authority_value,authority_category_id,path
-    </sql>
-    <select id="findByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-        SELECT  <include refid="Base_Column_List"/>
-        FROM xmh_authority xa,xmh_role_authority xra
-        WHERE  xa.id = xra.authorities_id AND  xra.roles_id = #{id}
-    </select>
-    <select id="findAll" parameterType="java.lang.Integer" resultMap="authorityMap">
-        SELECT xa.id, xa.create_date, xa.modify_date,xa.name,xa.authority_value,xa.authority_category_id,xa.path,xac.name,xac.id
-        FROM xmh_authority xa,xmh_authority_category xac
-        WHERE  xa.authority_category_id = xac.id
-        ORDER BY `xa`.create_date DESC
-       <!-- <if test="param1 != null and param2 != null">
-            limit #{param1},#{param2}
-        </if>-->
-    </select>
-    <insert id="save" parameterType="com.my.test.pojo.Authority">
-        INSERT INTO  xmh_authority(
-          id,
-          create_date,
-          modify_date,
-          name,
-          authority_value,
-          authority_category_id,
-          path
-        )VALUES (
-          #{id},
-          #{createDate},
-          #{modifyDate},
-          #{name},
-          #{authorityValue},
-          #{authorityCategoryId},
-          #{path}
-        )
 
-    </insert>
-    <select id="getOne" parameterType="java.lang.Long" resultMap="RoleAndAuthorityMap">
+    <sql id="Base_Column_List">
+        AUTHORITY_ID, CREATE_DATE, MODIFY_DATE,NAME,AUTHORITY_VALUE,AUTHORITY_CATEGORY_ID,PATH
+    </sql>
+
+    <select id="queryAuthorityListByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
         SELECT
-          xa.id, xa.create_date, xa.modify_date,xa.name,xa.authority_value,xa.authority_category_id,xa.path,xr.id,xr.is_system,xr.name
-        FROM  xmh_authority xa,xmh_role_authority xra,xmh_role xr
-        WHERE xa.id = xra.authorities_id AND  xr.id = xra.roles_id AND  xa.id = #{id}
+            <include refid="Base_Column_List"/>
+        FROM
+            XMH_AUTHORITY XA,XMH_ROLE_AUTHORITY XRA
+        WHERE
+            XA.AUTHORITY_ID = XRA.AUTHORITIES_ID AND XRA.ROLES_ID = #{id}
     </select>
-    <update id="update" parameterType="com.my.test.pojo.Authority" >
-        UPDATE  xmh_authority
-        SET
-        <if test="modifyDate !=null ">
-            modify_date = #{modifyDate}
-        </if>
-        <if test="authorityValue !=null  ">
-            ,authority_value = #{authorityValue}
-        </if>
-        <if test="authorityCategoryId !=null ">
-            ,authority_category_id = #{authorityCategoryId}
-        </if>
-        <if test="name !=null">
-            ,name = #{name}
-        </if><if test="path !=null">
-           ,path = #{path}
-        </if>
-        WHERE id = #{id}
+
+    <select id="queryAllAuthorityList" parameterType="java.lang.Integer" resultMap="authorityMap">
+        SELECT
+            XA.AUTHORITY_ID, XA.CREATE_DATE, XA.MODIFY_DATE, XA.NAME, XA.AUTHORITY_VALUE, XA.AUTHORITY_CATEGORY_ID, XA.PATH, XAC.NAME, XAC.AUTHORITY_CATEGORY_ID
+        FROM
+            XMH_AUTHORITY XA,XMH_AUTHORITY_CATEGORY XAC
+        WHERE
+            XA.AUTHORITY_CATEGORY_ID = XAC.AUTHORITY_CATEGORY_ID
+        ORDER BY XA.CREATE_DATE DESC
+        <!-- <if test="param1 != null and param2 != null">
+             limit #{param1},#{param2}
+         </if>-->
+    </select>
+
+    <insert id="addAuthority" parameterType="com.my.test.pojo.Authority">
+        INSERT INTO
+            XMH_AUTHORITY(
+                AUTHORITY_ID,
+                CREATE_DATE,
+                MODIFY_DATE,
+                NAME,
+                AUTHORITY_VALUE,
+                AUTHORITY_CATEGORY_ID,
+                PATH
+        )VALUES (
+                #{authorityId},
+                #{createDate},
+                #{modifyDate},
+                #{name},
+                #{authorityValue},
+                #{authorityCategoryId},
+                #{path}
+        )
+    </insert>
+
+    <select id="queryAuthority" parameterType="com.my.test.pojo.Authority" resultMap="RoleAndAuthorityMap">
+        SELECT
+            XA.AUTHORITY_ID, XA.CREATE_DATE, XA.MODIFY_DATE, XA.NAME, XA.AUTHORITY_VALUE, XA.AUTHORITY_CATEGORY_ID, XA.PATH, XR.ROLE_ID, XR.IS_SYSTEM, XR.NAME
+        FROM
+            XMH_AUTHORITY XA, XMH_ROLE_AUTHORITY XRA, XMH_ROLE XR
+        WHERE
+            XA.AUTHORITY_ID = XRA.AUTHORITIES_ID AND XR.ROLE_ID = XRA.ROLES_ID AND XA.AUTHORITY_ID = #{authorityId}
+    </select>
+
+    <select id="queryAuthorityInfo" parameterType="com.my.test.pojo.Authority" resultMap="RoleAndAuthorityMap">
+        SELECT
+            *
+        FROM
+            XMH_AUTHORITY
+        WHERE
+            AUTHORITY_ID = #{authorityId}
+    </select>
+
+    <update id="update" parameterType="com.my.test.pojo.Authority">
+        UPDATE
+            XMH_AUTHORITY
+        <set>
+            <if test="modifyDate !=null ">
+                MODIFY_DATE = #{modifyDate},
+            </if>
+            <if test="authorityValue !=null  ">
+                AUTHORITY_VALUE = #{authorityValue},
+            </if>
+            <if test="authorityCategoryId !=null ">
+                AUTHORITY_CATEGORY_ID = #{authorityCategoryId},
+            </if>
+            <if test="name !=null">
+                NAME = #{name},
+            </if>
+            <if test="path !=null">
+                PATH = #{path},
+            </if>
+        </set>
+        WHERE
+            AUTHORITY_ID = #{authorityId}
     </update>
+
     <delete id="delete" parameterType="java.lang.Long">
-        DELETE  FROM  xmh_authority WHERE id = #{id}
+        DELETE FROM
+            XMH_AUTHORITY
+        WHERE
+            AUTHORITY_ID = #{authorityId}
     </delete>
 </mapper>

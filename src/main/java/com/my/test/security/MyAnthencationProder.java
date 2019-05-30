@@ -42,7 +42,10 @@ public class MyAnthencationProder implements AuthenticationProvider {
             remoteAddress = webDetails.getRemoteAddress();
         }
 
-        Admin admin = adminService.findByUsername(username);
+        Admin admin = new Admin();
+        admin.setUsername(username);
+
+        admin = adminService.queryAdmin(admin);
         if (admin == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
@@ -73,29 +76,32 @@ public class MyAnthencationProder implements AuthenticationProvider {
             admin.setIsLocked(false);
 
             admin.setLockedDate(null);
-            adminService.update(admin);
+            adminService.updateAdmin(admin);
         }
-        if (!passwordEncoder.matches(password, admin.getPassword())) {
+
+        boolean matches = passwordEncoder.matches(password, admin.getPassword());
+
+        if (!matches) {
             int loginFailureCount = admin.getLoginFailureCount() + 1;
             if (loginFailureCount >= 5) {//失败5次锁定账号
                 admin.setIsLocked(true);
                 admin.setLockedDate(new Date());
             }
             admin.setLoginFailureCount(loginFailureCount);
-            adminService.update(admin);
+            adminService.updateAdmin(admin);
             throw new BadCredentialsException("密码错误" + loginFailureCount + "次，若连续5次密码错误账号将被锁定");
         }
         admin.setLoginIp(remoteAddress);
         admin.setLoginDate(new Date());
         admin.setLoginFailureCount(0);
-        adminService.update(admin);
+        adminService.updateAdmin(admin);
 
         List<SimpleGrantedAuthority> auths = new ArrayList<>();
 
         for (Role role : admin.getRoles()) {
             auths.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-            Long id = role.getId();
-            List<Authority> authorities = authorityService.findByRoleId(id);
+            Long id = role.getRoleId();
+            List<Authority> authorities = authorityService.queryAuthorityListByRoleId(id);
             role.setAuthorities(authorities);
             for (Authority authority : role.getAuthorities()) {
                 auths.add(new SimpleGrantedAuthority(authority.getAuthorityValue()));

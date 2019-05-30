@@ -42,7 +42,7 @@
                     </li>
                 </ul>
             </div>
-            <form id="addForm" th:action="@{save}" th:method="post" class="form-horizontal" role="form">
+            <form id="addForm" th:action="@{addAuthorityCategory}" th:method="post" class="form-horizontal" role="form">
                 <div class="portlet box red-sunglo">
                     <div class="portlet-title">
                         <div class="caption">
@@ -59,7 +59,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">排序：</label>
                             <div class="col-md-4 input">
-                                <input type="text" name="order" class="form-control" maxlength="9" placeholder="排序"/>
+                                <input type="text" name="orders" class="form-control" maxlength="9" placeholder="排序"/>
                             </div>
                         </div>
                         <div class=" form-actions fluid">
@@ -90,7 +90,7 @@
         $addForm.validate({
             rules: {
                 name: "required",
-                order: {
+                orders: {
                     number: true
                 }
             }

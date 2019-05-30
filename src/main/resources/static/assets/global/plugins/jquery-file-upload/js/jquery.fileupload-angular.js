@@ -213,7 +213,7 @@
                         $element.fileupload('option', option, data);
                     },
                     add: function (data) {
-                        return $element.fileupload('add', data);
+                        return $element.fileupload('templates.authorityCategory.add', data);
                     },
                     send: function (data) {
                         return $element.fileupload('send', data);

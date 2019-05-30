@@ -88,7 +88,7 @@
                                     <div class="col-md-4 input">
                                         <label class="control-label" th:each="role:${roles}">
                                             <input type="checkbox" name="roleIds"
-                                                   th:checked="${admin.roles.contains(role)}" th:value="${role.id}"/>
+                                                   th:checked="${admin.roles.contains(role)}" th:value="${role.roleId}"/>
                                             <label th:text="${role.name}"></label>
                                         </label>
                                     </div>

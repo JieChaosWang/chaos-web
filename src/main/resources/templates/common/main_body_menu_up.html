@@ -37,17 +37,17 @@
                 </a>
                 <ul class="sub-menu">
                     <li sec:authorize="hasAuthority('admin:authorityCategory')">
-                        <a th:href="@{/authority_category/list?menuId=authorityCategory}"
+                        <a th:href="@{/authorityCategory/queryAuthorityCategoryList?menuId=authorityCategory}"
                            id="authorityCategory">权限分类管理</a>
                     </li>
                     <li sec:authorize="hasAuthority('admin:authority')">
                         <a th:href="@{/authority/list?menuId=authority}" id="authority">权限管理</a>
                     </li>
                     <li sec:authorize="hasAuthority('admin:role')">
-                        <a th:href="@{/role/list?menuId=role}" id="role">角色管理</a>
+                        <a th:href="@{/role/queryRoleList?menuId=role}" id="role">角色管理</a>
                     </li>
                     <li sec:authorize="hasAuthority('admin:admin')">
-                        <a th:href="@{/admin/list?menuId=admin}" id="admin">管理员管理</a>
+                        <a th:href="@{/admin/queryAdminList?menuId=admin}" id="admin">管理员管理</a>
                     </li>
                     <li sec:authorize="hasAuthority('admin:area')">
                         <a th:href="@{/area/list?menuId=area}" id="area">地区管理</a>

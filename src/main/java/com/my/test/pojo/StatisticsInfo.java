@@ -10,6 +10,10 @@ import java.util.List;
 public class StatisticsInfo {
     // 统计主键
     private int statisticsSeq;
+    //管理员id
+    private Long adminId;
+    //管理员名称
+    private String adminName;
     // 出单数
     private int volumeNum;
     // 接线数
@@ -24,6 +28,22 @@ public class StatisticsInfo {
     private int todaySignedNum;
     // 创建时间
     private Date createTime;
+
+    public String getAdminName() {
+        return adminName;
+    }
+
+    public void setAdminName(String adminName) {
+        this.adminName = adminName;
+    }
+
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
+    }
 
     public int getStatisticsSeq() {
         return statisticsSeq;

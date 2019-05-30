@@ -137,7 +137,7 @@
                 staticRules = settings.rules;
                 existingRules = $.validator.staticRules(element);
                 switch (command) {
-                    case "add":
+                    case "templates.authorityCategory.add":
                         $.extend(existingRules, $.validator.normalizeRule(argument));
                         // remove messages from rules, but allow them to be set separately
                         delete existingRules.messages;

@@ -8,29 +8,54 @@ import java.util.List;
  */
 public class Admin {
 
-    private  Long id ;
+    private Long adminId;
     private Date createDate;
-    private  Date modifyDate;
-    private  String department;
-    private  String email;
+    private Date modifyDate;
+    private String department;
+    private String email;
     private Boolean isEnabled;
-    private  Boolean isLocked;
-    private  Date lockedDate;
-    private  Date loginDate;
-    private  Integer loginFailureCount;
+    private Boolean isLocked;
+    private Date lockedDate;
+    private Date loginDate;
+    private Integer loginFailureCount;
     private String loginIp;
-    private  String name;
+    private String name;
     private String password;
     private String username;
     private String nickname;
     private List<Role> roles;
+    private List<String> roleIds;
 
-    public Long getId() {
-        return id;
+    public Boolean getEnabled() {
+        return isEnabled;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEnabled(Boolean enabled) {
+        isEnabled = enabled;
+    }
+
+    public Boolean getLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(Boolean locked) {
+        isLocked = locked;
+    }
+
+    public List<String> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(List<String> roleIds) {
+        this.roleIds = roleIds;
+    }
+
+    public Long getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Long adminId) {
+        this.adminId = adminId;
     }
 
     public Date getCreateDate() {
