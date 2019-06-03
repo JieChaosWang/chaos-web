@@ -11,7 +11,7 @@ public class AuthorityCategory {
     private Date createDate;
     private Date modifyDate;
     private Integer orders;
-    private String name;
+    private String authorityCategoryName;
 
     public Long getAuthorityCategoryId() {
         return authorityCategoryId;
@@ -45,11 +45,11 @@ public class AuthorityCategory {
         this.orders = orders;
     }
 
-    public String getName() {
-        return name;
+    public String getAuthorityCategoryName() {
+        return authorityCategoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAuthorityCategoryName(String authorityCategoryName) {
+        this.authorityCategoryName = authorityCategoryName;
     }
 }

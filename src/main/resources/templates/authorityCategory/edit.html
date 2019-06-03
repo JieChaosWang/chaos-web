@@ -38,13 +38,13 @@
                         <i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a th:href="@{/authority_category/list}">权限分类管理</a>
+                        <a th:href="@{/authorityCategory/list}">权限分类管理</a>
                     </li>
                 </ul>
             </div>
-            <form id="editForm" th:action="@{/authority_category/update}" th:method="post" class="form-horizontal"
+            <form id="editForm" th:action="@{updateAuthorityCategory}" th:method="post" class="form-horizontal"
                   role="form">
-                <input type="hidden" name="id" th:value="${authorityCategory.authorityCategoryId}"/>
+                <input type="hidden" name="authorityCategoryId" th:value="${authorityCategory.authorityCategoryId}"/>
                 <div class="portlet box red-sunglo">
                     <div class="portlet-title">
                         <div class="caption">
@@ -55,15 +55,15 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label"><span class="required">* </span>名称：</label>
                             <div class="col-md-4 input">
-                                <input type="text" name="name" class="form-control" th:value="${authorityCategory.name}"
+                                <input type="text" name="authorityCategoryName" class="form-control" th:value="${authorityCategory.authorityCategoryName}"
                                        maxlength="200" placeholder="名称"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label">排序：</label>
                             <div class="col-md-4 input">
-                                <input type="text" name="order" class="form-control"
-                                       th:value="${authorityCategory.order}" maxlength="9" placeholder="排序"/>
+                                <input type="text" name="orders" class="form-control"
+                                       th:value="${authorityCategory.orders}" maxlength="9" placeholder="排序"/>
                             </div>
                         </div>
                         <div class=" form-actions fluid">
@@ -93,7 +93,7 @@
         var $editForm = $("#editForm");
         $editForm.validate({
             rules: {
-                name: "required",
+                authorityCategoryName: "required",
                 order: {
                     number: true
                 }

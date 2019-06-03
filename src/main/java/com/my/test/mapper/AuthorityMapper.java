@@ -15,6 +15,8 @@ public interface AuthorityMapper {
 
     List<Authority> queryAuthorityListByRoleId(Long id);
 
+    List<Authority> queryAuthorityList(Authority authority);
+
     List<Authority> queryAllAuthorityList(Integer pageNum, Integer pageSize);
 
     void addAuthority(Authority authority);

@@ -79,7 +79,7 @@
                                 <tr th:each="authorityCategory : ${page.list}">
                                     <td><input type="checkbox" name="ids" th:value="${authorityCategory.authorityCategoryId}"/></td>
                                     <td>
-                                        <label th:text="${authorityCategory.name}"></label>
+                                        <label th:text="${authorityCategory.authorityCategoryName}"></label>
                                     </td>
                                     <td>
                                         <label th:text="${authorityCategory.orders}"></label>
@@ -88,7 +88,7 @@
                                         <label th:text="${#calendars.format(authorityCategory.createDate,'yyyy-MM-dd HH:mm:ss')}"></label>
                                     </td>
                                     <td>
-                                        <a th:href="@{|edit/${authorityCategory.authorityCategoryId}|}"
+                                        <a th:href="@{'/authorityCategory/edit?authorityCategoryId='+${authorityCategory.authorityCategoryId}}"
                                            class="btn default btn-xs purple">
                                             <i class="icon-edit"></i> 编辑
                                         </a>
@@ -114,24 +114,4 @@
 <!-- END JAVASCRIPTS -->
 </body>
 <!-- END BODY -->
-<script th:inline="javascript">
-
-    $("#deleteButton").click(function() {
-        var ids = $("#ids").val();
-        $.ajax({
-            url:"localhost:7000/authorityCategory/delAuthorityCategory",
-            data:{ids:ids},
-            type:"POST",　　//数据传输方式
-            dataType:"JSON",　　//数据返回的类型
-            success: function(data) {
-                if(data.trim()=="SUCCESS_MESSAGE"){　　//处理页面定义的true
-                    alert ("OK");
-                } else{
-                    alert ("NO");
-                }
-            }
-        });
-    })
-
-</script>
 </html>

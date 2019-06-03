@@ -7,7 +7,10 @@ import com.my.test.pojo.Authority;
 import com.my.test.pojo.AuthorityCategory;
 import com.my.test.service.AuthorityCategoryService;
 import com.my.test.service.AuthorityService;
+import com.my.test.util.BeeUtils;
+import com.my.test.util.Constants;
 import com.my.test.util.Message;
+import com.my.test.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,13 +33,17 @@ public class AuthorityController extends BaseController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(PageInfo pageInfo, Model model) {
-//        pageNum=1;pageSize=10;
+        try {
+    //        pageNum=1;pageSize=10;
 
-//        List<Authority> authorities = authorityService.findAll(pageNum , pageSize);
-        PageHelper.startPage(pageInfo.getPageNum() == 0 ? 1 : pageInfo.getPageNum(), 10);
-        List<Authority> list = authorityService.queryAllAuthorityList(pageInfo.getPageNum(), pageInfo.getPageSize());
-        PageInfo authorities = new PageInfo(list, 5);
-        model.addAttribute("page", authorities);
+    //        List<Authority> authorities = authorityService.findAll(pageNum , pageSize);
+            PageHelper.startPage(pageInfo.getPageNum() == 0 ? 1 : pageInfo.getPageNum(), 10);
+            List<Authority> list = authorityService.queryAllAuthorityList(pageInfo.getPageNum(), pageInfo.getPageSize());
+            PageInfo authorities = new PageInfo(list, 5);
+            model.addAttribute("page", authorities);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
         return "authority/list";
     }
 
@@ -47,9 +54,15 @@ public class AuthorityController extends BaseController {
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String add(Model model) {
 
-        List<AuthorityCategory> authorityCategories = authorityCategoryService.queryAuthorityCategoryList(new AuthorityCategory());
+        try {
 
-        model.addAttribute("authorityCategoryTree", authorityCategories);
+            List<AuthorityCategory> authorityCategories = authorityCategoryService.queryAuthorityCategoryList(new AuthorityCategory());
+
+            model.addAttribute("authorityCategoryTree", authorityCategories);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+
         return "authority/add";
     }
 
@@ -58,28 +71,40 @@ public class AuthorityController extends BaseController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String save(Authority authority, RedirectAttributes redirectAttributes) {
-        authorityService.addAuthority(authority);
-        addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
+        try {
+
+            authorityService.addAuthority(authority);
+            addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+
         return "redirect:list";
     }
 
     /**
      * 权限编辑
      */
-    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
-    public String edit(@PathVariable("id") Long authorityId, Model model) {
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public String edit(Long authorityId, Model model) {
 
-        List<AuthorityCategory> authorityCategories = authorityCategoryService.queryAuthorityCategoryList(new AuthorityCategory());
+        try {
 
-        model.addAttribute("authorityCategoryTree", authorityCategories);
+            List<AuthorityCategory> authorityCategories = authorityCategoryService.queryAuthorityCategoryList(new AuthorityCategory());
 
-        Authority authority = new Authority();
+            model.addAttribute("authorityCategoryTree", authorityCategories);
 
-        authority.setAuthorityId(authorityId);
+            Authority authority = new Authority();
 
-        authority = authorityService.queryAuthority(authority);
+            authority.setAuthorityId(authorityId);
 
-        model.addAttribute("authority", authority);
+            authority = authorityService.queryAuthorityInfo(authority);
+
+            model.addAttribute("authority", authority);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+
         return "authority/edit";
     }
 
@@ -88,11 +113,18 @@ public class AuthorityController extends BaseController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(Authority authority, RedirectAttributes redirectAttributes) {
-        if (!isValid(authority)) {
-            return ERROR_VIEW;
+        try {
+
+            BeeUtils.isEmpty("权限主键",authority.getAuthorityId());
+
+            if (!isValid(authority)) {
+                return ERROR_VIEW;
+            }
+            authorityService.updateAuthority(authority);
+            addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
-        authorityService.updateAuthority(authority);
-        addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
         return "redirect:list";
     }
 
@@ -100,14 +132,21 @@ public class AuthorityController extends BaseController {
      * 删除
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public @ResponseBody
-    Message delete(Long[] ids) {
-        Authority authority = authorityService.deleteAuthority(ids);
+    public @ResponseBody Message delete(Long[] ids) {
+        Message message = new Message();
 
-        if (authority != null) {
-            return Message.error("删除失败，请先修改" + authority.getName() + "相关的角色");
+        try {
+
+            authorityService.deleteAuthority(ids);
+
+            message.setType(Message.Type.success);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            message.setType(Message.Type.error);
+            message.setContent(e.getMessage());
         }
-        return SUCCESS_MESSAGE;
+
+        return message;
     }
 
 

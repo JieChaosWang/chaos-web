@@ -7,6 +7,8 @@ import com.my.test.mapper.RoleAuthorityMapper;
 import com.my.test.pojo.Authority;
 import com.my.test.pojo.RoleAuthority;
 import com.my.test.service.AuthorityService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ import java.util.List;
  */
 @Service
 public class AuthorityServiceImpl implements AuthorityService {
+
+    protected static Logger logger = LoggerFactory.getLogger(AuthorityCategoryServiceImpl.class);
 
     @Autowired
     private AuthorityMapper authorityMapper;
@@ -41,7 +45,7 @@ public class AuthorityServiceImpl implements AuthorityService {
      * @param authority
      */
     @Override
-    public void addAuthority(Authority authority) {
+    public void addAuthority(Authority authority) throws Exception {
 
         try {
             authority.setCreateDate(new Date());
@@ -56,8 +60,9 @@ public class AuthorityServiceImpl implements AuthorityService {
 
             roleAuthorityMapper.addRoleAuthority(roleAuthority);
 
-        }catch (Exception ex){
-            ex.printStackTrace();
+        }catch (Exception e){
+            logger.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -67,9 +72,32 @@ public class AuthorityServiceImpl implements AuthorityService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Authority queryAuthority(Authority authority) {
+    public Authority queryAuthority(Authority authority) throws Exception {
+        try {
 
-        authority = authorityMapper.queryAuthority(authority);
+            authority = authorityMapper.queryAuthority(authority);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+
+        return authority;
+    }
+
+    /**
+     * 仅权限查询信息
+     * @param id 权限id
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Authority queryAuthorityInfo(Authority authority) throws Exception {
+        try {
+
+            authority = authorityMapper.queryAuthorityInfo(authority);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
 
         return authority;
     }
@@ -79,12 +107,13 @@ public class AuthorityServiceImpl implements AuthorityService {
      * @param authority 权限
      */
     @Transactional
-    public void updateAuthority(Authority authority) {
+    public void updateAuthority(Authority authority) throws Exception {
         try{
             authority.setModifyDate(new Date());
             authorityMapper.update(authority);
-        }catch (Exception ex){
-            ex.printStackTrace();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -94,14 +123,21 @@ public class AuthorityServiceImpl implements AuthorityService {
      */
     @Override
     @Transactional
-    public void deleteAuthority(Long... AuthorityIds){
-        for(Long id:AuthorityIds){
-            Authority authorityForQuery  = new Authority();
-            authorityForQuery.setAuthorityId(id);
+    public void deleteAuthority(Long... AuthorityIds) throws Exception {
+        try{
+            for(Long id:AuthorityIds){
+                Authority authorityForQuery  = new Authority();
+                authorityForQuery.setAuthorityId(id);
 
-            Authority authority = authorityMapper.queryAuthority(authorityForQuery);
-
-            authorityMapper.delete(id);
+                Authority authority = authorityMapper.queryAuthority(authorityForQuery);
+                if (authority != null) {
+                    throw new Exception("删除失败，请先修改" + authority.getName() + "相关的角色");
+                }
+                authorityMapper.delete(id);
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 }

@@ -10,11 +10,13 @@ import java.util.List;
  */
 public interface AuthorityCategoryService {
 
-    List<AuthorityCategory> queryAuthorityCategoryList(AuthorityCategory authorityCategory);
+    List<AuthorityCategory> queryAuthorityCategoryList(AuthorityCategory authorityCategory) throws Exception;
 
-    void addAuthorityCategory(AuthorityCategory authorityCategory);
+    void addAuthorityCategory(AuthorityCategory authorityCategory) throws Exception;
 
     AuthorityCategory queryAuthorityCategory(AuthorityCategory authorityCategory);
 
-    void delAuthorityCategory(Long[] authorityCategoryIds);
+    void delAuthorityCategory(Long[] authorityCategoryIds) throws Exception;
+
+    void updateAuthorityCategory(AuthorityCategory authorityCategory) throws Exception;
 }

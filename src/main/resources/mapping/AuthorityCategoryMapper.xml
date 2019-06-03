@@ -3,25 +3,25 @@
 <mapper namespace="com.my.test.mapper.AuthorityCategoryMapper">
     <resultMap id="BaseResultMap" type="com.my.test.pojo.AuthorityCategory">
         <id column="AUTHORITY_CATEGORY_ID" property="authorityCategoryId" jdbcType="BIGINT"/>
-        <result column="NAME" property="name" jdbcType="VARCHAR"/>
+        <result column="AUTHORITY_CATEGORY_NAME" property="authorityCategoryName" jdbcType="VARCHAR"/>
         <result column="ORDERS" property="orders" jdbcType="INTEGER"/>
         <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        AUTHORITY_CATEGORY_ID,CREATE_DATE,MODIFY_DATE,ORDERS,NAME
+        AUTHORITY_CATEGORY_ID,CREATE_DATE,MODIFY_DATE,ORDERS,AUTHORITY_CATEGORY_NAME
     </sql>
 
     <insert id="addAuthorityCategory" parameterType="com.my.test.pojo.AuthorityCategory">
         INSERT INTO  XMH_AUTHORITY_CATEGORY(
             AUTHORITY_CATEGORY_ID,
-            NAME,
+            AUTHORITY_CATEGORY_NAME,
             ORDERS,
             CREATE_DATE
         )VALUES (
             #{authorityCategoryId},
-            #{name},
+            #{authorityCategoryName},
             #{orders},
             #{createDate}
         )
@@ -39,4 +39,29 @@
         DELETE FROM XMH_AUTHORITY_CATEGORY
         WHERE AUTHORITY_CATEGORY_ID = #{authorityCategoryId,jdbcType=BIGINT}
     </delete>
+
+    <update id="updateAuthorityCategory" parameterType="com.my.test.pojo.AuthorityCategory">
+        UPDATE
+            XMH_AUTHORITY_CATEGORY
+        <set>
+            <if test="orders !=null">
+                ORDERS = #{orders},
+            </if>
+            <if test="authorityCategoryName !=null">
+                AUTHORITY_CATEGORY_NAME = #{authorityCategoryName}
+            </if>
+        </set>
+        WHERE
+        AUTHORITY_CATEGORY_ID = #{authorityCategoryId}
+    </update>
+
+    <select id="queryAuthorityCategory" parameterType="com.my.test.pojo.AuthorityCategory" resultMap="BaseResultMap">
+        SELECT
+            *
+        FROM
+            XMH_AUTHORITY_CATEGORY
+        WHERE
+            AUTHORITY_CATEGORY_ID = #{authorityCategoryId}
+    </select>
+
 </mapper>

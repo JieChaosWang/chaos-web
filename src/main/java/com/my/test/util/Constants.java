@@ -13,4 +13,14 @@ public interface Constants {
 
     public static final String IS_DEFAULT_ADDRESS_N = "N";
 
+    /**
+     * 方法执行成功
+     **/
+    public static final String RESULT_SUCCESS = "1";
+
+    /**
+     * 方法执行失败
+     **/
+    public static final String RESULT_FAIL = "0";
+
 }

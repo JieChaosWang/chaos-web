@@ -14,7 +14,7 @@
     <resultMap id="authorityMap" type="com.my.test.pojo.Authority" extends="BaseResultMap">
         <association property="authorityCategory" javaType="com.my.test.pojo.AuthorityCategory">
             <id column="AUTHORITY_CATEGORY_ID" property="authorityCategoryId"/>
-            <result column="NAME" property="name"/>
+            <result column="AUTHORITY_CATEGORY_NAME" property="authorityCategoryName"/>
         </association>
     </resultMap>
 
@@ -39,9 +39,24 @@
             XA.AUTHORITY_ID = XRA.AUTHORITIES_ID AND XRA.ROLES_ID = #{id}
     </select>
 
+    <select id="queryAuthorityList" parameterType="com.my.test.pojo.Authority" resultMap="BaseResultMap">
+        SELECT
+            <include refid="Base_Column_List"/>
+        FROM
+            XMH_AUTHORITY
+        <where>
+            <if test="name != null and name != ''">AND NAME=#{name}</if>
+            <if test="path != null and path != ''">AND PATH=#{path}</if>
+            <if test="authorityValue != null and authorityValue != ''">AND AUTHORITY_VALUE=#{authorityValue}</if>
+            <if test="authorityCategoryId != null and authorityCategoryId != ''">AND AUTHORITY_CATEGORY_ID=#{authorityCategoryId}</if>
+            <if test="createDate != null and createDate != ''">AND CREATE_DATE=#{createDate}</if>
+        </where>
+    </select>
+
+
     <select id="queryAllAuthorityList" parameterType="java.lang.Integer" resultMap="authorityMap">
         SELECT
-            XA.AUTHORITY_ID, XA.CREATE_DATE, XA.MODIFY_DATE, XA.NAME, XA.AUTHORITY_VALUE, XA.AUTHORITY_CATEGORY_ID, XA.PATH, XAC.NAME, XAC.AUTHORITY_CATEGORY_ID
+            XA.AUTHORITY_ID, XA.CREATE_DATE, XA.MODIFY_DATE, XA.NAME, XA.AUTHORITY_VALUE, XA.AUTHORITY_CATEGORY_ID, XA.PATH, XAC.AUTHORITY_CATEGORY_NAME, XAC.AUTHORITY_CATEGORY_ID
         FROM
             XMH_AUTHORITY XA,XMH_AUTHORITY_CATEGORY XAC
         WHERE

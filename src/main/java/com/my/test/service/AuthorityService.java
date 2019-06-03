@@ -11,15 +11,17 @@ import java.util.List;
  */
 public interface AuthorityService {
 
-    List<Authority> queryAuthorityListByRoleId(Long id);
+    List<Authority> queryAuthorityListByRoleId(Long id) throws Exception;
 
-    List<Authority> queryAllAuthorityList(Integer pageNum, Integer pageSize);
+    List<Authority> queryAllAuthorityList(Integer pageNum, Integer pageSize) throws Exception;
 
-    void addAuthority(Authority authority);
+    void addAuthority(Authority authority) throws Exception;
 
-    Authority queryAuthority(Authority authority);
+    Authority queryAuthority(Authority authority) throws Exception;
 
-    void updateAuthority(Authority authority);
+    Authority queryAuthorityInfo(Authority authority) throws Exception;
 
-    void deleteAuthority(Long[] ids);
+    void updateAuthority(Authority authority) throws Exception;
+
+    void deleteAuthority(Long[] ids) throws Exception;
 }

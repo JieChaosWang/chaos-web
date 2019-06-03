@@ -18,6 +18,8 @@ public interface AuthorityCategoryMapper {
 
     void delAuthorityCategory(Long authorityCategoryId);
 
+    void updateAuthorityCategory(AuthorityCategory authorityCategory);
+
     AuthorityCategory queryAuthorityCategory(AuthorityCategory authorityCategory);
 
 }

@@ -5,6 +5,8 @@ import com.my.test.pojo.Authority;
 import com.my.test.pojo.Role;
 import com.my.test.service.AdminService;
 import com.my.test.service.AuthorityService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @Component
 public class MyAnthencationProder implements AuthenticationProvider {
+    protected static Logger logger = LoggerFactory.getLogger(MyAnthencationProder.class);
 
     @Autowired
     private AdminService adminService;
@@ -32,6 +35,7 @@ public class MyAnthencationProder implements AuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
@@ -97,15 +101,18 @@ public class MyAnthencationProder implements AuthenticationProvider {
         adminService.updateAdmin(admin);
 
         List<SimpleGrantedAuthority> auths = new ArrayList<>();
-
-        for (Role role : admin.getRoles()) {
-            auths.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-            Long id = role.getRoleId();
-            List<Authority> authorities = authorityService.queryAuthorityListByRoleId(id);
-            role.setAuthorities(authorities);
-            for (Authority authority : role.getAuthorities()) {
-                auths.add(new SimpleGrantedAuthority(authority.getAuthorityValue()));
+        try {
+            for (Role role : admin.getRoles()) {
+                auths.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
+                Long id = role.getRoleId();
+                List<Authority> authorities = authorityService.queryAuthorityListByRoleId(id);
+                role.setAuthorities(authorities);
+                for (Authority authority : role.getAuthorities()) {
+                    auths.add(new SimpleGrantedAuthority(authority.getAuthorityValue()));
+                }
             }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
         }
 
         return new UsernamePasswordAuthenticationToken(admin, password, auths);
