@@ -11,6 +11,8 @@ public interface RoleService {
 
     Role queryRole(Role role);
 
+    void updateRole(Role role) throws Exception;
+
     void addRole(Role role) throws Exception;
 
     List<Role> queryRoleList(Role role);

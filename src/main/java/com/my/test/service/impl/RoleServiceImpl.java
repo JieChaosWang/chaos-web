@@ -10,7 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +26,21 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
 
+    /**
+     * 权限角色
+     * @param role 角色
+     */
+    @Transactional
+    @Override
+    public void updateRole(Role role) throws Exception {
+        try{
+            role.setModifyDate(new Date());
+            roleMapper.updateRole(role);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public Role queryRole(Role role) {

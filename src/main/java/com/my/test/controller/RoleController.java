@@ -6,6 +6,7 @@ import com.my.test.pojo.Role;
 import com.my.test.pojo.Role;
 import com.my.test.service.RoleService;
 import com.my.test.service.RoleService;
+import com.my.test.util.BeeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.Date;
 import java.util.List;
@@ -61,4 +63,47 @@ public class RoleController extends BaseController {
 
         return "role/list";
     }
+
+    /**
+     * 权限编辑
+     */
+    @RequestMapping(value = "/toUpdateRoleInfoIndex", method = RequestMethod.GET)
+    public String toUpdateRoleInfoIndex(Long roleId, Model model) {
+
+        try {
+
+            Role role = new Role();
+
+            role.setRoleId(roleId);
+
+            role = roleService.queryRole(role);
+
+            model.addAttribute("role", role);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+
+        return "authority/edit";
+    }
+
+    /**
+     * 权限更新
+     */
+    @RequestMapping(value = "/updateRoleInfo", method = RequestMethod.POST)
+    public String update(Role role, RedirectAttributes redirectAttributes) {
+        try {
+
+            BeeUtils.isEmpty("角色主键",role.getRoleId());
+
+            if (!isValid(role)) {
+                return ERROR_VIEW;
+            }
+            roleService.updateRole(role);
+            addFlashMessage(redirectAttributes, SUCCESS_MESSAGE);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return "redirect:list";
+    }
+
 }
