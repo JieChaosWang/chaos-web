@@ -14,11 +14,17 @@
     <insert id="addRoleAuthority" parameterType="com.my.test.pojo.RoleAuthority">
         INSERT INTO XMH_ROLE_AUTHORITY
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roles_id != null and roles_id != ''">
+                ROLES_ID,
+            </if>
             <if test="authorities_id != null and authorities_id != ''">
                 AUTHORITIES_ID
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roles_id != null and roles_id != ''">
+                #{roles_id},
+            </if>
             <if test="authorities_id != null and authorities_id != ''">
                 #{authorities_id}
             </if>
@@ -39,6 +45,14 @@
         WHERE
         ROLES_ID = #{roles_id,jdbcType=INTEGER} AND AUTHORITIES_ID= #{authorities_id,jdbcType=INTEGER}
     </update>
+
+    <delete id="delRoleAuthority" parameterType="com.my.test.pojo.RoleAuthority" >
+        DELETE FROM XMH_ROLE_AUTHORITY
+        <trim prefix="WHERE" prefixOverrides="AND">
+            <if test="roles_id != null and roles_id != ''">AND ROLES_ID= #{roles_id,jdbcType=BIGINT}</if>
+            <if test="authorities_id != null and authorities_id != ''">AND AUTHORITIES_ID= #{authorities_id,jdbcType=BIGINT}</if>
+        </trim>
+    </delete>
 
     <!--查询列表-->
     <select id="queryRoleAuthorityList" parameterType="com.my.test.pojo.RoleAuthority" resultMap="BaseResultMap">

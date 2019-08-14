@@ -71,15 +71,13 @@
                             <thead th:each="authorityCategory:${authorityCategoryTree}">
                             <tr role="row" class="heading">
                                 <th width="15%" tabindex="0" aria-controls="datatable_orders" rowspan="1" colspan="1">
-                                    <a href="javascript:;" class="selectAll" title="全选"
-                                       th:text="${authorityCategory.name}"></a>
+                                    <a href="javascript:;" class="selectAll" title="全选" th:text="${authorityCategory.authorityCategoryName}"></a>
                                 </th>
                                 <td>
-                                                <span th:each="authority:${authorityCategory.authorities}">
-                                                    <input type="checkbox" name="authorityIds"
-                                                           th:value="${authority.id}"/>
-                                                    <label th:text="${authority.name}"></label>
-                                                </span>
+                                    <span th:each="authority:${authorityCategory.authorities}">
+                                        <input type="checkbox" name="authorityIds" th:value="${authority.authorityId}"/>
+                                        <label th:text="${authority.name}"></label>
+                                    </span>
                                 </td>
                             </tr>
                             </thead>

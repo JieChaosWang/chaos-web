@@ -1,6 +1,7 @@
 package com.my.test.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wang on 2018/11/28.
@@ -12,6 +13,15 @@ public class AuthorityCategory {
     private Date modifyDate;
     private Integer orders;
     private String authorityCategoryName;
+    private List<Authority> authorities;
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
 
     public Long getAuthorityCategoryId() {
         return authorityCategoryId;

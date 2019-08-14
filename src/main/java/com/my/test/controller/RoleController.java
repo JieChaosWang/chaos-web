@@ -2,8 +2,10 @@ package com.my.test.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.my.test.pojo.AuthorityCategory;
 import com.my.test.pojo.Role;
 import com.my.test.pojo.Role;
+import com.my.test.service.AuthorityCategoryService;
 import com.my.test.service.RoleService;
 import com.my.test.service.RoleService;
 import com.my.test.util.BeeUtils;
@@ -37,13 +39,31 @@ public class RoleController extends BaseController {
 
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private AuthorityCategoryService authorityCategoryService;
+
+    /**
+     * 去添加管理员
+     */
+    @RequestMapping(value = "/toAddRole", method = RequestMethod.GET)
+    public String toAddRole(Model model) {
+        try {
+
+            List<AuthorityCategory> authorityCategories = authorityCategoryService.queryAuthorityCategoryList(new AuthorityCategory());
+
+            model.addAttribute("authorityCategoryTree", authorityCategories);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return "role/add";
+    }
 
     @RequestMapping(value = "/addRole")
-    public @ResponseBody Object addRole(Role role) {
+    public @ResponseBody
+    Object addRole(Role role) {
         try {
 
             roleService.addRole(role);
-
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
@@ -54,11 +74,11 @@ public class RoleController extends BaseController {
     public String queryRoleList(Role role, PageInfo pageInfo, Model model) {
 
 
-            PageHelper.startPage(pageInfo.getPageNum() == 0 ? 1 : pageInfo.getPageNum(), 10);
-            List<Role> list = roleService.queryRoleList(role);
+        PageHelper.startPage(pageInfo.getPageNum() == 0 ? 1 : pageInfo.getPageNum(), 10);
+        List<Role> list = roleService.queryRoleList(role);
 
-            PageInfo rolePage = new PageInfo(list, 5);
-            model.addAttribute("page", rolePage);
+        PageInfo rolePage = new PageInfo(list, 5);
+        model.addAttribute("page", rolePage);
 
 
         return "role/list";
@@ -79,21 +99,26 @@ public class RoleController extends BaseController {
             role = roleService.queryRole(role);
 
             model.addAttribute("role", role);
+
+            List<AuthorityCategory> authorityCategories = authorityCategoryService.queryAuthorityCategoryList(new AuthorityCategory());
+
+            model.addAttribute("authorityCategoryTree", authorityCategories);
+
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
 
-        return "authority/edit";
+        return "role/edit";
     }
 
     /**
-     * 权限更新
+     * 角色更新
      */
     @RequestMapping(value = "/updateRoleInfo", method = RequestMethod.POST)
-    public String update(Role role, RedirectAttributes redirectAttributes) {
+    public String updateRoleInfo(Role role, RedirectAttributes redirectAttributes) {
         try {
 
-            BeeUtils.isEmpty("角色主键",role.getRoleId());
+            BeeUtils.isEmpty("角色主键", role.getRoleId());
 
             if (!isValid(role)) {
                 return ERROR_VIEW;
@@ -103,7 +128,7 @@ public class RoleController extends BaseController {
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return "redirect:list";
+        return "redirect:queryRoleList";
     }
 
 }

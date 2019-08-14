@@ -9,6 +9,18 @@
         <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
     </resultMap>
 
+    <resultMap id="authorityCategoryAndAuthorities" type="com.my.test.pojo.AuthorityCategory" extends="BaseResultMap">
+        <collection property="authorities" ofType="com.my.test.pojo.Authority">
+            <id column="AUTHORITY_ID" property="authorityId" jdbcType="BIGINT"/>
+            <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP"/>
+            <result column="MODIFY_DATE" property="modifyDate" jdbcType="TIMESTAMP"/>
+            <result column="NAME" property="name" jdbcType="VARCHAR"/>
+            <result column="AUTHORITY_VALUE" property="authorityValue" jdbcType="VARCHAR"/>
+            <result column="AUTHORITY_CATEGORY_ID" property="authorityCategoryId" jdbcType="BIGINT"/>
+            <result column="PATH" property="path" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         AUTHORITY_CATEGORY_ID,CREATE_DATE,MODIFY_DATE,ORDERS,AUTHORITY_CATEGORY_NAME
     </sql>
@@ -27,12 +39,14 @@
         )
     </insert>
 
-    <select id="queryAuthorityCategoryList" resultMap="BaseResultMap"
-            parameterType="com.my.test.pojo.AuthorityCategory">
+    <select id="queryAuthorityCategoryList" resultMap="authorityCategoryAndAuthorities" parameterType="com.my.test.pojo.AuthorityCategory">
         SELECT
-            <include refid="Base_Column_List"/>
+            XAC.AUTHORITY_CATEGORY_NAME, XAC.AUTHORITY_CATEGORY_ID, XA.AUTHORITY_ID, XA.CREATE_DATE, XA.MODIFY_DATE, XA.NAME, XA.AUTHORITY_VALUE, XA.AUTHORITY_CATEGORY_ID, XA.PATH
         FROM
-            XMH_AUTHORITY_CATEGORY
+            XMH_AUTHORITY_CATEGORY XAC, XMH_AUTHORITY XA
+        WHERE
+            XA.AUTHORITY_CATEGORY_ID = XAC.AUTHORITY_CATEGORY_ID
+        ORDER BY XAC.CREATE_DATE DESC
     </select>
 
     <delete id="delAuthorityCategory" parameterType="java.lang.Long" >

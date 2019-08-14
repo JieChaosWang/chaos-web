@@ -11,7 +11,16 @@ public class Role {
     private String description;
     private String isSystem;
     private String name;
+    private List<Long> authorityIds;
     private List<Authority> authorities;
+
+    public List<Long> getAuthorityIds() {
+        return authorityIds;
+    }
+
+    public void setAuthorityIds(List<Long> authorityIds) {
+        this.authorityIds = authorityIds;
+    }
 
     public Long getRoleId() {
         return roleId;

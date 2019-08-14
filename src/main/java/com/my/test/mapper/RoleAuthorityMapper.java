@@ -12,5 +12,7 @@ public interface RoleAuthorityMapper {
 
     int updateRoleAuthority(RoleAuthority roleAuthority);
 
+    int delRoleAuthority(RoleAuthority roleAuthority);
+
     List<RoleAuthority> queryRoleAuthorityList(RoleAuthority roleAuthority);
 }

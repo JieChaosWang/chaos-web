@@ -42,8 +42,8 @@
                     </li>
                 </ul>
             </div>
-            <form id="editForm" th:action="@{/role/update}" th:method="post" class="form-horizontal" role="form">
-                <input type="hidden" name="id" th:value="${role.id}"/>
+            <form id="editForm" th:action="@{/role/updateRoleInfo}" th:method="post" class="form-horizontal" role="form">
+                <input type="hidden" name="roleId" th:value="${role.roleId}"/>
                 <div class="portlet box red-sunglo">
                     <div class="portlet-title">
                         <div class="caption">
@@ -65,23 +65,18 @@
                                        th:value="${role.description}" maxlength="200" placeholder="描述"/>
                             </div>
                         </div>
-
-                        <!--<div id="datatable_orders_wrapper" class="dataTables_wrapper dataTables_extended_wrapper no-footer">-->
-                        <!--<div class="table-scrollable">-->
                         <table class="table table-striped table-bordered table-hover dataTable no-footer"
                                id="datatable_orders" aria-describedby="datatable_orders_info" role="grid">
                             <thead th:each="authorityCategory:${authorityCategoryTree}">
                             <tr role="row" class="heading">
                                 <th width="15%" tabindex="0" aria-controls="datatable_orders" rowspan="1" colspan="1">
-                                    <a href="javascript:;" class="selectAll" title="全选"
-                                       th:text="${authorityCategory.name}"></a>
+                                    <a href="javascript:;" class="selectAll" title="全选" th:text="${authorityCategory.authorityCategoryName}"></a>
                                 </th>
                                 <td>
-                                            <span th:each="authority:${authorityCategory.authorities}">
-                                                <input type="checkbox" name="authorityIds" th:value="${authority.id}"
-                                                       th:checked="${role.authorities.contains(authority)}"/>
-                                                <label th:text="${authority.name}"></label>
-                                            </span>
+                                    <span th:each="authority:${authorityCategory.authorities}">
+                                        <input type="checkbox" name="authorityIds" th:value="${authority.authorityId}" th:checked="${role.authorities.contains(authority)}"/>
+                                        <label th:text="${authority.name}"></label>
+                                    </span>
                                 </td>
                             </tr>
                             </thead>

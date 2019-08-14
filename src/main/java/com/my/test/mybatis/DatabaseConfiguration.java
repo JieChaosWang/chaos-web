@@ -75,9 +75,9 @@ public class DatabaseConfiguration {
         dataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
 
         //超过时间限制是否回收
-        dataSource.setRemoveAbandoned(true);
+        dataSource.setRemoveAbandoned(false);
         //超时时间；单位为秒
-        dataSource.setRemoveAbandonedTimeout(30);
+        dataSource.setRemoveAbandonedTimeout(1800);
         //关闭abanded连接时输出错误日志
         dataSource.setLogAbandoned(true);
 
